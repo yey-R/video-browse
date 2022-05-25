@@ -25,11 +25,16 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             FetchUser().currentUser.getProfilePicture(flag: true),
-            Text(
-              "${FetchUser().currentUser.getUsername()}",
-              style: const TextStyle(
-                fontSize: 25.0,
-                color: kColorOwnerText,
+            Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 12.0,
+              ),
+              child: Text(
+                "${FetchUser().currentUser.getUsername()}",
+                style: const TextStyle(
+                  fontSize: 25.0,
+                  color: kColorOwnerText,
+                ),
               ),
             ),
             const ActionButton(
