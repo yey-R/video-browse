@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_browse/firebase_options.dart';
 import 'package:video_browse/models/video_info.dart';
+import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart' as p;
@@ -45,7 +46,7 @@ class UploadVideo {
       // ignore: empty_catches
     } on FirebaseException {}
     dynamic thumbnailLink = await createThumbnail(info);
-    writeMetadata(
+    createMetadata(
       info,
       ref,
       thumbnailLink,
@@ -54,7 +55,7 @@ class UploadVideo {
     await FetchVideos().setVideos();
   }
 
-  Future<void> writeMetadata(VideoInfo info, ref, thumbnail) async {
+  Future<void> createMetadata(VideoInfo info, ref, thumbnail) async {
     DatabaseReference dbRef = _dbInstance.ref("videos/${info.getID()}");
 
     await dbRef.set(
@@ -62,7 +63,7 @@ class UploadVideo {
         "title": info.getName(),
         "category": info.getCategory(),
         "desc": info.getDesc(),
-        "user": info.getOwner(),
+        "user": FetchUser().getCurrentUserUID(),
         "duration": info.getDuration(),
         "view": 0,
         "likes": 0,
@@ -71,6 +72,27 @@ class UploadVideo {
         "commentToggle": info.getCommentToggle(),
         "linkToVideo": await ref.getDownloadURL(),
         "linkToThumbnail": thumbnail,
+        "comments": info.getComments(),
+      },
+    );
+  }
+
+  void updateMetadata(VideoInfo info) async {
+    DatabaseReference dbRef = _dbInstance.ref("videos/${info.getID()}");
+    await dbRef.set(
+      {
+        "title": info.getName(),
+        "category": info.getCategory(),
+        "desc": info.getDesc(),
+        "user": info.getOwner(),
+        "duration": info.getDuration(),
+        "view": info.getView(),
+        "likes": info.getLikes(),
+        "viewLastDay": info.getViewLastDay(),
+        "uploadDate": info.getUploadDate(),
+        "commentToggle": info.getCommentToggle(),
+        "linkToVideo": info.getURL(),
+        "linkToThumbnail": info.getThumbnail(),
         "comments": info.getComments(),
       },
     );

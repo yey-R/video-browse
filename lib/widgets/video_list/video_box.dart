@@ -92,6 +92,7 @@ class VideoBox extends StatelessWidget {
               InfoBox(
                 icon: "assets/icons/view.png",
                 value: video.getView(),
+                isMainPage: true,
               ),
               Expanded(
                 child: Container(),
@@ -99,6 +100,7 @@ class VideoBox extends StatelessWidget {
               InfoBox(
                 icon: "assets/icons/like.png",
                 value: video.getLikes(),
+                isMainPage: true,
               ),
               SizedBox(
                 width: video.getCommentToggle() ? 4.0 : 0,
@@ -107,6 +109,7 @@ class VideoBox extends StatelessWidget {
                   ? InfoBox(
                       icon: "assets/icons/comments.png",
                       value: video.getComments().length,
+                      isMainPage: true,
                     )
                   : const SizedBox.shrink(),
             ],
