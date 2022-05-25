@@ -31,7 +31,7 @@ class LoginInput extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
-            "assets/2.gif",
+            "assets/app.gif",
             width: 100.0,
           ),
           const SizedBox(
