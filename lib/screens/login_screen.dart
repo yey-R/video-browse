@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_browse/widgets/login/login_button.dart';
+import 'package:video_browse/widgets/action_button.dart';
 import 'package:video_browse/widgets/login/login_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,6 +13,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isLogin = false;
+
+  void setLogin() {
+    setState(() {
+      isLogin = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/2.gif",
+                          "assets/app.gif",
                           width: 100,
                         ),
                         const SizedBox(
@@ -57,17 +63,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 250,
                     ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          isLogin = true;
-                        });
-                      },
-                      child: const LoginButton(buttonText: "Log in"),
+                    ActionButton(
+                      buttonText: "Log in",
+                      routerPage: null,
+                      replace: true,
+                      width: 150,
+                      fun: setLogin,
                     ),
                   ],
                 )
-              : const LoginInput(),
+              : LoginInput(),
         ],
       ),
     );

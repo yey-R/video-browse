@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/utilities/constants.dart';
-import 'package:video_browse/widgets/video_play/comment_box.dart';
 
 class CommentSection extends StatefulWidget {
   final Function fun;

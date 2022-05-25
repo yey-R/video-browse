@@ -68,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/2.gif",
+                    "assets/app.gif",
                     width: 50.0,
                     color: kColorActive,
                   ),

@@ -37,7 +37,7 @@ class CommentBox extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${info.getDate().toString().substring(0, 16)}",
+                    info.getDate().toString().substring(0, 16),
                     style: const TextStyle(
                       color: kColorVideoText,
                       fontSize: 12.0,

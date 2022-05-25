@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/video_info.dart';
+import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:video_browse/widgets/video_list/info_box.dart';
 
@@ -21,7 +22,7 @@ class _DescriptionState extends State<Description> {
   @override
   void initState() {
     super.initState();
-    widget.video.increaseView();
+    widget.video.increaseView(FetchUser().uid);
     _height = widget.video.getDesc().length > 35 ? 110.0 : 100.0;
   }
 
@@ -50,12 +51,7 @@ class _DescriptionState extends State<Description> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircleAvatar(
-                radius: 20.0,
-                child: Icon(
-                  Icons.person,
-                ),
-              ),
+              widget.video.getOwner().getProfilePicture(),
               const SizedBox(
                 width: 6.0,
               ),
@@ -72,7 +68,7 @@ class _DescriptionState extends State<Description> {
                     ),
                   ),
                   Text(
-                    widget.video.getOwner(),
+                    widget.video.getOwner().getUsername(),
                     style: const TextStyle(
                       color: kColorVideoText,
                       fontSize: 15.0,
@@ -96,10 +92,8 @@ class _DescriptionState extends State<Description> {
                   isMainPage: false,
                 ),
                 onTap: () {
-                  setState(() {
-                    widget.video.increaseLike();
-                    widget.fun();
-                  });
+                  widget.video.setLike(FetchUser().uid);
+                  widget.fun();
                 },
               ),
             ],

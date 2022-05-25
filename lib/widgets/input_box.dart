@@ -44,10 +44,6 @@ class _InputBoxState extends State<InputBox> {
           color: kColorPrimary,
         ),
         decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.done,
-            color: Colors.green,
-          ),
           hintText: widget.hint,
           filled: true,
           fillColor: Colors.white,

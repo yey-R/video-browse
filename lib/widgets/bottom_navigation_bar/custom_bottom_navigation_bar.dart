@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/screens/main_screen.dart';
-import 'package:video_browse/screens/trend_screen.dart';
-import 'package:video_browse/screens/upload_video_screen.dart';
+import 'package:video_browse/screens/profile_screen.dart';
 import 'package:video_browse/widgets/bottom_navigation_bar/navigation_bar_button.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -37,15 +36,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
             routerPage: const MainScreen(),
           ),
           NavigationBarButton(
-              hasIcon: isTrends,
-              iconName: "trends",
-              title: "Trends",
-              routerPage: const TrendScreen()),
-          NavigationBarButton(
               hasIcon: isProfile,
               iconName: "profile",
               title: "Profile",
-              routerPage: const UploadVideoScreen()),
+              routerPage: const ProfileScreen()),
         ],
       ),
     );

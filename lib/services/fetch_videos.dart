@@ -27,14 +27,17 @@ class FetchVideos {
     _videoList.clear();
     for (var key in _value.keys) {
       if (_value[key] == null) continue;
+      Set<String> views = Set.from(_value[key]["view"]);
+      Set<String> likes = Set.from(_value[key]["likes"]);
+
       VideoInfo video = VideoInfo(
         name: _value[key]["title"],
         description: _value[key]["desc"],
         category: _value[key]["category"],
         user: User(_value[key]["user"]),
         duration: _value[key]["duration"],
-        view: _value[key]["view"],
-        likes: _value[key]["likes"],
+        view: views,
+        likes: likes,
         viewLastDay: _value[key]["viewLastDay"],
         uploadDate: _value[key]["uploadDate"],
         commentToggle: _value[key]["commentToggle"],

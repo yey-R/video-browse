@@ -3,6 +3,7 @@ import 'package:video_browse/screens/login_screen.dart';
 import 'package:video_browse/screens/main_screen.dart';
 import 'package:video_browse/services/fetch_categories.dart';
 import 'package:video_browse/services/fetch_login.dart';
+import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,9 +35,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
     FetchLogin login = FetchLogin(widget.email, widget.password);
     dynamic isLoggedIn = await login.checkAuth();
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       await FetchVideos().setVideos();
       await FetchCategories().setCategories();
+      FetchUser().setUser();
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
@@ -59,7 +61,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       backgroundColor: kColorPrimary,
       body: Center(
         child: Image.asset(
-          "assets/2.gif",
+          "assets/app.gif",
           width: 150.0,
         ),
       ),

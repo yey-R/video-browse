@@ -23,12 +23,7 @@ class VideoBox extends StatelessWidget {
         children: [
           Row(
             children: [
-              const CircleAvatar(
-                radius: 20.0,
-                child: Icon(
-                  Icons.person,
-                ),
-              ),
+              video.user.getProfilePicture(),
               const SizedBox(
                 width: 6.0,
               ),
@@ -44,7 +39,7 @@ class VideoBox extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    video.getOwner(),
+                    video.getOwner().getUsername(),
                     style: const TextStyle(
                       color: kColorVideoText,
                       fontSize: 15.0,

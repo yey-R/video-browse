@@ -8,8 +8,8 @@ class VideoInfo {
   final String category;
   final User user;
   final int duration;
-  dynamic view;
-  dynamic likes;
+  final Set<String> view;
+  final Set<String> likes;
   dynamic viewLastDay;
   dynamic uploadDate;
   final bool commentToggle;
@@ -37,6 +37,18 @@ class VideoInfo {
 
   void addComment(Comment comment) {
     comments.add(comment);
+  }
+
+  void increaseView(String uid) {
+    view.add(uid);
+  }
+
+  void setLike(String uid) {
+    if (likes.contains(uid)) {
+      likes.remove(uid);
+    } else {
+      likes.add(uid);
+    }
   }
 
   List<Comment> getComments() {
@@ -77,8 +89,8 @@ class VideoInfo {
     return category;
   }
 
-  String getOwner() {
-    return user.getUsername();
+  User getOwner() {
+    return user;
   }
 
   int getDuration() {
@@ -86,11 +98,11 @@ class VideoInfo {
   }
 
   int getView() {
-    return view;
+    return view.length;
   }
 
   int getLikes() {
-    return likes;
+    return likes.length;
   }
 
   int getViewLastDay() {

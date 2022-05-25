@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/comment.dart';
-import 'package:video_browse/models/user.dart';
 import 'package:video_browse/models/video_info.dart';
+import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:chewie/chewie.dart';
-import 'package:video_browse/widgets/input_box.dart';
 import 'package:video_browse/widgets/video_play/comment_box.dart';
 import 'package:video_browse/widgets/video_play/comment_section.dart';
 import 'package:video_browse/widgets/video_play/description.dart';
 import 'package:video_browse/widgets/video_play/recommend_box.dart';
-import 'package:video_browse/widgets/video_list/info_box.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayScreen extends StatefulWidget {
@@ -32,11 +30,11 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   bool commentToggle = false;
   bool isComments = true;
   String comment = "";
-  bool flag = true;
+  bool flag = false;
   TextEditingController controller = TextEditingController();
 
   Widget placeHolder = Image.asset(
-    "assets/3.gif",
+    "assets/loading.gif",
     width: double.infinity,
     color: Colors.black,
     fit: BoxFit.cover,
@@ -189,7 +187,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                                     ),
                                   ],
                                 ),
-                          isComments && commentToggle
+                          flag && isComments && commentToggle
                               ? Positioned(
                                   bottom: 0.0,
                                   child: Row(
@@ -263,8 +261,8 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                                           return;
                                         }
                                         controller.clear();
-                                        Comment tempComment =
-                                            Comment(User(""), comment);
+                                        Comment tempComment = Comment(
+                                            FetchUser().currentUser, comment);
                                         widget.video.addComment(tempComment);
                                         comment = "";
                                       });

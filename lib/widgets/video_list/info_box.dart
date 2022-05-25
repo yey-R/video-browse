@@ -5,6 +5,7 @@ class InfoBox extends StatefulWidget {
   final String icon;
   final int value;
   final bool isMainPage;
+
   const InfoBox({
     Key? key,
     required this.icon,

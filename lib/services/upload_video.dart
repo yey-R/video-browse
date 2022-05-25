@@ -32,8 +32,12 @@ class UploadVideo {
   }
 
   Future pickVideo() async {
-    _pickedFile = await _picker.pickVideo(source: ImageSource.gallery);
-    _filePath = _pickedFile.path;
+    try {
+      _pickedFile = await _picker.pickVideo(source: ImageSource.gallery);
+      _filePath = _pickedFile.path;
+    } catch (e) {
+      return;
+    }
   }
 
   Future<void> uploadVideo(VideoInfo info) async {

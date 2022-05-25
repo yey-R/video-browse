@@ -39,7 +39,6 @@ class _CategoryListState extends State<CategoryList> {
 
   @override
   Widget build(BuildContext context) {
-    createCategories();
     return SizedBox(
       height: 50,
       child: ListView(

@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/screens/loading_screen.dart';
 import 'package:video_browse/utilities/constants.dart';
-import 'package:video_browse/widgets/login/login_button.dart';
+import 'package:video_browse/widgets/action_button.dart';
 
+// ignore: must_be_immutable
 class LoginInput extends StatelessWidget {
-  const LoginInput({Key? key}) : super(key: key);
+  LoginInput({Key? key}) : super(key: key);
+
+  String email = "";
+  String password = "";
+  dynamic context;
+
+  void loadingScreen() {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) =>
+            LoadingScreen(email: email, password: password),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    String email = "";
-    String password = "";
+    this.context = context;
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -70,19 +84,12 @@ class LoginInput extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 15.0),
-          TextButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoadingScreen(
-                    email: email,
-                    password: password,
-                  ),
-                ),
-              );
-            },
-            child: const LoginButton(buttonText: "Log in"),
+          ActionButton(
+            buttonText: "Log in",
+            routerPage: null,
+            replace: true,
+            width: 150,
+            fun: loadingScreen,
           ),
         ],
       ),

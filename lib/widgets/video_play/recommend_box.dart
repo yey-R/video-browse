@@ -40,7 +40,7 @@ class RecommendBox extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    info.getOwner(),
+                    info.getOwner().getUsername(),
                     style: const TextStyle(
                       color: kColorVideoText,
                       fontSize: 15.0,
