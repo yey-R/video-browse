@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/screens/loading_screen.dart';
+import 'package:video_browse/screens/sign_up_screen.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:video_browse/widgets/action_button.dart';
 
@@ -75,7 +76,12 @@ class LoginInput extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SignUpScreen()),
+              );
+            },
             child: const Text(
               "Don't have any account? Sign up",
               style: TextStyle(
