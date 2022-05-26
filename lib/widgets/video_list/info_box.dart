@@ -1,45 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/utilities/constants.dart';
 
-class InfoBox extends StatefulWidget {
+class InfoBox extends StatelessWidget {
   final String icon;
   final int value;
   final bool isMainPage;
+  final List<Widget> widgets = [];
+  final bool isLiked;
 
-  const InfoBox({
+  InfoBox({
     Key? key,
     required this.icon,
     required this.value,
     required this.isMainPage,
-  }) : super(key: key);
-
-  @override
-  State<InfoBox> createState() => _InfoBoxState();
-}
-
-class _InfoBoxState extends State<InfoBox> {
-  List<Widget> widgets = <Widget>[];
-  @override
-  void initState() {
-    super.initState();
-    widgets = [
-      Image.asset(
-        widget.icon,
-        width: widget.isMainPage ? 18.0 : 30.0,
-        color: kColorActive,
-      ),
-      const SizedBox(
-        width: 3.0,
-      ),
-      Text(
-        "${widget.value}",
-        style: const TextStyle(
-          color: Color(0xFF959595),
-          fontWeight: FontWeight.bold,
-          fontSize: 15.0,
+    this.isLiked = false,
+  }) : super(key: key) {
+    widgets.addAll(
+      [
+        Image.asset(
+          icon,
+          width: isMainPage ? 18.0 : 30.0,
+          color: isLiked ? Colors.red : kColorActive,
         ),
-      )
-    ];
+        const SizedBox(
+          width: 3.0,
+        ),
+        Text(
+          "$value",
+          style: const TextStyle(
+            color: Color(0xFF959595),
+            fontWeight: FontWeight.bold,
+            fontSize: 15.0,
+          ),
+        )
+      ],
+    );
   }
 
   @override
@@ -52,7 +47,7 @@ class _InfoBoxState extends State<InfoBox> {
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
-      child: widget.isMainPage
+      child: isMainPage
           ? Row(
               children: widgets,
             )
