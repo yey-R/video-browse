@@ -12,10 +12,12 @@ import 'package:video_browse/widgets/video_play/recommend_box.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayScreen extends StatefulWidget {
+  final dynamic fun;
   final VideoInfo video;
   const VideoPlayScreen({
     Key? key,
     required this.video,
+    this.fun,
   }) : super(key: key);
 
   @override
@@ -44,6 +46,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   void initState() {
     super.initState();
     createVideoPlayer();
+    widget.video.updateView(FetchUser().uid);
     commentToggle = widget.video.getCommentToggle();
   }
 
@@ -74,10 +77,6 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
     });
   }
 
-  void updateCounter() {
-    setState(() {});
-  }
-
   List<CommentBox> getComments() {
     List<CommentBox> commentBox = <CommentBox>[];
     if (commentBox.isEmpty) {
@@ -101,6 +100,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
         recVideos.add(
           RecommendBox(
             info: video,
+            fun: widget.fun,
           ),
         );
       }
@@ -133,7 +133,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
             ),
             Description(
               video: widget.video,
-              fun: updateCounter,
+              fun: widget.fun,
             ),
             Expanded(
               child: Container(
@@ -265,6 +265,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                                             FetchUser().currentUser, comment);
                                         widget.video.addComment(tempComment);
                                         comment = "";
+                                        if (widget.fun != null) widget.fun();
                                       });
                                     },
                                   ),

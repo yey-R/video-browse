@@ -21,27 +21,24 @@ class _MainScreenState extends State<MainScreen> {
   dynamic _categories;
   dynamic categoryList;
   dynamic videoList;
+  dynamic _activeCategory;
 
   @override
   void initState() {
     super.initState();
     _videos = FetchVideos().getVideos();
     _categories = FetchCategories().getCategories();
-    setFilter(_categories[0]);
+    _activeCategory = _categories[0];
+  }
+
+  void refresh() {
+    setState(() {});
   }
 
   void setFilter(Category activeCategory) {
     setState(
       () {
-        categoryList = CategoryList(
-          categoryList: _categories,
-          fun: setFilter,
-          activeCategory: activeCategory,
-        );
-        videoList = VideoList(
-          videos: _videos,
-          category: activeCategory,
-        );
+        _activeCategory = activeCategory;
       },
     );
   }
@@ -84,8 +81,16 @@ class _MainScreenState extends State<MainScreen> {
               const SizedBox(
                 height: 10.0,
               ),
-              categoryList,
-              videoList,
+              CategoryList(
+                categoryList: _categories,
+                fun: setFilter,
+                activeCategory: _activeCategory,
+              ),
+              VideoList(
+                videos: _videos,
+                category: _activeCategory,
+                fun: refresh,
+              ),
             ],
           ),
         ),
