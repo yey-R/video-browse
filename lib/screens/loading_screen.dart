@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:video_browse/firebase_options.dart';
 import 'package:video_browse/screens/login_screen.dart';
 import 'package:video_browse/screens/main_screen.dart';
 import 'package:video_browse/services/fetch_categories.dart';
@@ -6,8 +8,6 @@ import 'package:video_browse/services/fetch_login.dart';
 import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
 import 'package:video_browse/utilities/constants.dart';
-import 'package:firebase_core/firebase_core.dart';
-import '../firebase_options.dart';
 
 class LoadingScreen extends StatefulWidget {
   final String email;
@@ -30,15 +30,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void fetchLogin() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    }
     FetchLogin login = FetchLogin(widget.email, widget.password);
     dynamic isLoggedIn = await login.checkAuth();
     if (isLoggedIn) {
       await FetchVideos().setVideos();
       await FetchCategories().setCategories();
-      FetchUser().setUser();
+      await FetchUser().setUser();
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(

@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:video_browse/firebase_options.dart';
 import 'package:video_browse/widgets/action_button.dart';
 import 'package:video_browse/widgets/login/login_input.dart';
 
@@ -13,6 +15,18 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isLogin = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initFirebase();
+  }
+
+  void initFirebase() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 
   void setLogin() {
     setState(() {
