@@ -19,6 +19,10 @@ class User {
     return "@" + user['username'];
   }
 
+  String getUID() {
+    return _uid;
+  }
+
   Widget getProfilePicture({flag = false}) {
     return user['profilePic'].isEmpty
         ? const Icon(Icons.person)
