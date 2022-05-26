@@ -24,27 +24,40 @@ class FetchVideos {
   Future<void> setVideos() async {
     if (_value == null) await fetchVideos();
     if (_value == null) return;
-    _videoList.clear();
     for (var key in _value.keys) {
       if (_value[key] == null) continue;
-      Set<String> views = Set.from(_value[key]["view"]);
-      Set<String> likes = Set.from(_value[key]["likes"]);
+
+      dynamic views = _value[key]["view"] == null
+          ? <String>{}
+          : Set.from(_value[key]["view"]);
+      dynamic likes = _value[key]["likes"] == null
+          ? <String>{}
+          : Set.from(_value[key]["likes"]);
 
       VideoInfo video = VideoInfo(
+        id: key,
         name: _value[key]["title"],
         description: _value[key]["desc"],
         category: _value[key]["category"],
         user: User(_value[key]["user"]),
         duration: _value[key]["duration"],
-        view: views,
+        views: views,
         likes: likes,
-        viewLastDay: _value[key]["viewLastDay"],
         uploadDate: _value[key]["uploadDate"],
         commentToggle: _value[key]["commentToggle"],
         videoURL: _value[key]["linkToVideo"],
         thumbnailURL: _value[key]["linkToThumbnail"],
       );
       _videoList.add(video);
+    }
+  }
+
+  void updateVideoList(VideoInfo info) {
+    if (_videoList.contains(info)) {
+      int index = _videoList.indexOf(info);
+      _videoList[index] = info;
+    } else {
+      _videoList.add(info);
     }
   }
 
