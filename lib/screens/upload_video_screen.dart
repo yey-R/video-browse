@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/category.dart';
-import 'package:video_browse/models/user.dart';
 import 'package:video_browse/models/video_info.dart';
-import 'package:video_browse/screens/main_screen.dart';
+import 'package:video_browse/screens/video_play_screen.dart';
 import 'package:video_browse/services/fetch_categories.dart';
+import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/upload_video.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:video_browse/widgets/action_button.dart';
@@ -23,7 +23,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
   String _name = "";
   String _description = "";
   dynamic _category;
-  bool _commentToggle = false;
+  bool _commentToggle = true;
   bool _emptyInput = false;
   dynamic _categories;
   int _index = 0;
@@ -155,31 +155,25 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
                         });
                         return;
                       }
-                      NavigatorState navigator = Navigator.of(context);
                       setState(() {
                         isUploading = true;
                       });
-                      await uploader.uploadVideo(
-                        VideoInfo(
-                          name: _name,
-                          user: User(""),
-                          description: _description,
-                          duration: 0,
-                          category: _category.getCategory(),
-                          commentToggle: _commentToggle,
-                          likes: <String>{},
-                          thumbnailURL: null,
-                          uploadDate: null,
-                          videoURL: null,
-                          view: <String>{},
-                          viewLastDay: null,
-                        ),
+                      VideoInfo newVideo = VideoInfo(
+                        name: _name,
+                        user: FetchUser().currentUser,
+                        description: _description,
+                        duration: 0,
+                        category: _category.getCategory(),
+                        commentToggle: _commentToggle,
                       );
-                      Navigator.push(
+                      await uploader.uploadVideo(newVideo);
+                      Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
                           pageBuilder: (context, animation1, animation2) =>
-                              const MainScreen(),
+                              VideoPlayScreen(
+                            video: newVideo,
+                          ),
                         ),
                       );
                     },
