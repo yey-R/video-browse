@@ -8,3 +8,7 @@ const kColorBoxBorder = Color(0xFF434343);
 const kColorOwnerText = Colors.white70;
 const kColorVideoText = Colors.white60;
 const kColorLike = Color(0xFFF38787);
+
+const invalidEmail = "E-Mail adress is not valid or already used!";
+const invalidPassword = "Password is not valid!";
+const invalidUsername = "Username is not valid or already taken!";
