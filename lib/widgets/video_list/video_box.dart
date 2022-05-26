@@ -6,10 +6,12 @@ import 'package:video_browse/widgets/video_list/info_box.dart';
 
 class VideoBox extends StatelessWidget {
   final VideoInfo video;
+  final Function fun;
 
   const VideoBox({
     Key? key,
     required this.video,
+    required this.fun,
   }) : super(key: key);
 
   @override
@@ -56,12 +58,14 @@ class VideoBox extends StatelessWidget {
             aspectRatio: 16 / 9,
             child: GestureDetector(
               onTap: () {
+                fun();
                 Navigator.push(
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
                         VideoPlayScreen(
                       video: video,
+                      fun: fun,
                     ),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,

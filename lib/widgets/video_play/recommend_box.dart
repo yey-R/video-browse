@@ -5,7 +5,12 @@ import 'package:video_browse/utilities/constants.dart';
 
 class RecommendBox extends StatelessWidget {
   final VideoInfo info;
-  const RecommendBox({Key? key, required this.info}) : super(key: key);
+  final dynamic fun;
+  const RecommendBox({
+    Key? key,
+    required this.info,
+    this.fun,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +31,9 @@ class RecommendBox extends StatelessWidget {
             const SizedBox(
               width: 10.0,
             ),
-            Expanded(
+            SizedBox(
+              height: 100,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -38,6 +43,10 @@ class RecommendBox extends StatelessWidget {
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
+                    softWrap: true,
+                  ),
+                  Expanded(
+                    child: Container(),
                   ),
                   Text(
                     info.getOwner().getUsername(),
@@ -47,7 +56,7 @@ class RecommendBox extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "5 days ago · ${info.getView()} views",
+                    "${info.getDate()} · ${info.getView()} views",
                     style: const TextStyle(
                       color: kColorVideoText,
                       fontSize: 15.0,
@@ -65,6 +74,7 @@ class RecommendBox extends StatelessWidget {
           PageRouteBuilder(
             pageBuilder: (context, animation1, animation2) => VideoPlayScreen(
               video: info,
+              fun: fun,
             ),
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,

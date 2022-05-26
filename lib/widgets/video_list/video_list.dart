@@ -3,32 +3,27 @@ import 'package:video_browse/models/category.dart';
 import 'package:video_browse/models/video_info.dart';
 import 'package:video_browse/widgets/video_list/video_box.dart';
 
-class VideoList extends StatefulWidget {
+class VideoList extends StatelessWidget {
   final Category category;
   final List<VideoInfo> videos;
+  final Function fun;
+  final List<VideoBox> videoList = <VideoBox>[];
 
-  const VideoList({
+  VideoList({
     Key? key,
     required this.category,
     required this.videos,
-  }) : super(key: key);
-
-  @override
-  State<VideoList> createState() => _VideoListState();
-}
-
-class _VideoListState extends State<VideoList> {
-  List<VideoBox> videoList = <VideoBox>[];
-
-  @override
-  void initState() {
-    super.initState();
+    required this.fun,
+  }) : super(key: key) {
     createVideos();
   }
 
   void createVideos() {
-    for (VideoInfo info in widget.videos) {
-      VideoBox video = VideoBox(video: info);
+    for (VideoInfo info in videos) {
+      VideoBox video = VideoBox(
+        video: info,
+        fun: fun,
+      );
       videoList.add(video);
     }
   }
@@ -52,7 +47,7 @@ class _VideoListState extends State<VideoList> {
     return Expanded(
       child: ListView(
         scrollDirection: Axis.vertical,
-        children: filterVideos(widget.category),
+        children: filterVideos(category),
       ),
     );
   }

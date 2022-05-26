@@ -6,11 +6,11 @@ import 'package:video_browse/widgets/video_list/info_box.dart';
 
 class Description extends StatefulWidget {
   final VideoInfo video;
-  final Function fun;
+  final dynamic fun;
   const Description({
     Key? key,
     required this.video,
-    required this.fun,
+    this.fun,
   }) : super(key: key);
 
   @override
@@ -19,11 +19,20 @@ class Description extends StatefulWidget {
 
 class _DescriptionState extends State<Description> {
   dynamic _height;
+  dynamic _isLiked;
   @override
   void initState() {
     super.initState();
-    widget.video.increaseView(FetchUser().uid);
     _height = widget.video.getDesc().length > 35 ? 110.0 : 100.0;
+    _isLiked = widget.video.isLiked(FetchUser().uid);
+  }
+
+  void update() {
+    setState(() {
+      widget.video.updateLike(FetchUser().uid);
+      _isLiked = widget.video.isLiked(FetchUser().uid);
+    });
+    if (widget.fun != null) widget.fun();
   }
 
   @override
@@ -90,10 +99,10 @@ class _DescriptionState extends State<Description> {
                   icon: "assets/icons/like.png",
                   value: widget.video.getLikes(),
                   isMainPage: false,
+                  isLiked: _isLiked,
                 ),
                 onTap: () {
-                  widget.video.setLike(FetchUser().uid);
-                  widget.fun();
+                  update();
                 },
               ),
             ],
