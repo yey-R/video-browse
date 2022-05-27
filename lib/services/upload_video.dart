@@ -6,7 +6,6 @@ import 'package:video_browse/models/video_info.dart';
 import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:path/path.dart' as p;
 
 class UploadVideo {
   static final UploadVideo _uploadVideo = UploadVideo._internal();
@@ -33,8 +32,7 @@ class UploadVideo {
 
   Future<void> uploadVideo(VideoInfo info) async {
     File file = File(_filePath);
-    final ref =
-        _storageRef.child("videos/${info.getID()}${p.extension(_filePath)}");
+    final ref = _storageRef.child("videos/${info.getID()}");
     try {
       await ref.putFile(file);
       // ignore: empty_catches
