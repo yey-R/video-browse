@@ -5,10 +5,11 @@ import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:chewie/chewie.dart';
+import 'package:video_browse/widgets/custom_back_button.dart';
+import 'package:video_browse/widgets/horizontal_video_box/horizontal_video_box.dart';
 import 'package:video_browse/widgets/video_play/comment_box.dart';
 import 'package:video_browse/widgets/video_play/comment_section.dart';
 import 'package:video_browse/widgets/video_play/description.dart';
-import 'package:video_browse/widgets/video_play/recommend_box.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayScreen extends StatefulWidget {
@@ -91,14 +92,14 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
     return commentBox;
   }
 
-  List<RecommendBox> getReccommends() {
+  List<HorizontalBox> getReccommends() {
     List<VideoInfo> videos = FetchVideos().getVideos();
-    List<RecommendBox> recVideos = <RecommendBox>[];
+    List<HorizontalBox> recVideos = <HorizontalBox>[];
     for (VideoInfo video in videos) {
       if (widget.video.getCategory() == video.getCategory() &&
           widget.video.getID() != video.getID()) {
         recVideos.add(
-          RecommendBox(
+          HorizontalBox(
             info: video,
             fun: widget.fun,
           ),
@@ -120,164 +121,179 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
     return Scaffold(
       backgroundColor: kColorPrimary,
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Container(
-                color: Colors.black,
-                height: 300,
-                width: double.infinity,
-                child: placeHolder,
-              ),
-            ),
-            Description(
-              video: widget.video,
-              fun: widget.fun,
-            ),
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: kColorBoxBorder,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+            Column(
+              children: [
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    color: Colors.black,
+                    height: 300,
+                    width: double.infinity,
+                    child: placeHolder,
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 25.0,
-                    ),
-                    CommentSection(fun: updateSection, activeTitle: "Comments"),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    Expanded(
-                      child: Stack(
-                        fit: StackFit.passthrough,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        children: [
-                          commentToggle || !isComments
-                              ? ListView(
-                                  children: isComments
-                                      ? getComments()
-                                      : getReccommends(),
-                                )
-                              : Column(
-                                  children: [
-                                    Image.asset(
-                                      "assets/icons/comments_off.png",
-                                      width: 250.0,
-                                      color: kColorPrimary,
-                                    ),
-                                    const SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    const Text(
-                                      "Comments are disabled by video creator",
-                                      style: TextStyle(
-                                        color: kColorVideoText,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                          flag && isComments && commentToggle
-                              ? Positioned(
-                                  bottom: 0.0,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 70,
-                                        width: 300,
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.symmetric(
-                                          horizontal: 20.0,
-                                        ),
-                                        child: flag
-                                            ? TextField(
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                  color: kColorPrimary,
-                                                ),
-                                                textAlign: TextAlign.center,
-                                                controller: controller,
-                                                decoration: InputDecoration(
-                                                  hintText: "Leave a comment",
-                                                  filled: true,
-                                                  fillColor: kColorInactive,
-                                                  counterStyle: const TextStyle(
-                                                    color: Colors.transparent,
-                                                  ),
-                                                  border: OutlineInputBorder(
-                                                    borderSide: BorderSide.none,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                ),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    comment = value;
-                                                  });
-                                                },
-                                              )
-                                            : const SizedBox.shrink(),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
-                          isComments && commentToggle
-                              ? Positioned(
-                                  bottom: 5.0,
-                                  right: 15.0,
-                                  child: GestureDetector(
-                                    child: CircleAvatar(
-                                      radius: 30.0,
-                                      backgroundColor: kColorActive,
-                                      child: Image.asset(
-                                        flag
-                                            ? "assets/icons/check.png"
-                                            : "assets/icons/write.png",
-                                        width: 25.0,
-                                        color: kColorPrimary,
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      setState(() {
-                                        if (comment.isEmpty || !flag) {
-                                          setState(() {
-                                            flag = !flag;
-                                          });
-                                          return;
-                                        }
-                                        controller.clear();
-                                        Comment tempComment = Comment(
-                                            FetchUser().currentUser, comment);
-                                        widget.video.addComment(tempComment);
-                                        comment = "";
-                                        if (widget.fun != null) widget.fun();
-                                      });
-                                    },
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
-                        ],
+                Description(
+                  video: widget.video,
+                  fun: widget.fun,
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: kColorBoxBorder,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0),
                       ),
                     ),
-                  ],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 25.0,
+                        ),
+                        CommentSection(
+                            fun: updateSection, activeTitle: "Comments"),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Expanded(
+                          child: Stack(
+                            fit: StackFit.passthrough,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            children: [
+                              commentToggle || !isComments
+                                  ? ListView(
+                                      children: isComments
+                                          ? getComments()
+                                          : getReccommends(),
+                                    )
+                                  : Column(
+                                      children: [
+                                        Image.asset(
+                                          "assets/icons/comments_off.png",
+                                          width: 250.0,
+                                          color: kColorPrimary,
+                                        ),
+                                        const SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        const Text(
+                                          "Comments are disabled by video creator",
+                                          style: TextStyle(
+                                            color: kColorVideoText,
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                              flag && isComments && commentToggle
+                                  ? Positioned(
+                                      bottom: 0.0,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 70,
+                                            width: 300,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.symmetric(
+                                              horizontal: 20.0,
+                                            ),
+                                            child: flag
+                                                ? TextField(
+                                                    maxLines: 1,
+                                                    style: const TextStyle(
+                                                      color: kColorPrimary,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                    controller: controller,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          "Leave a comment",
+                                                      filled: true,
+                                                      fillColor: kColorInactive,
+                                                      counterStyle:
+                                                          const TextStyle(
+                                                        color:
+                                                            Colors.transparent,
+                                                      ),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderSide:
+                                                            BorderSide.none,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                    ),
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        comment = value;
+                                                      });
+                                                    },
+                                                  )
+                                                : const SizedBox.shrink(),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                              isComments && commentToggle
+                                  ? Positioned(
+                                      bottom: 5.0,
+                                      right: 15.0,
+                                      child: GestureDetector(
+                                        child: CircleAvatar(
+                                          radius: 30.0,
+                                          backgroundColor: kColorActive,
+                                          child: Image.asset(
+                                            flag
+                                                ? "assets/icons/check.png"
+                                                : "assets/icons/write.png",
+                                            width: 25.0,
+                                            color: kColorPrimary,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            if (comment.isEmpty || !flag) {
+                                              setState(() {
+                                                flag = !flag;
+                                              });
+                                              return;
+                                            }
+                                            controller.clear();
+                                            Comment tempComment = Comment(
+                                                FetchUser().currentUser,
+                                                comment);
+                                            widget.video
+                                                .addComment(tempComment);
+                                            comment = "";
+                                            if (widget.fun != null)
+                                              widget.fun();
+                                          });
+                                        },
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
+            const CustomBackButton(),
           ],
         ),
       ),

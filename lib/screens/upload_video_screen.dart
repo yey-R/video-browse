@@ -8,6 +8,7 @@ import 'package:video_browse/services/upload_video.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:video_browse/widgets/action_button.dart';
 import 'package:video_browse/widgets/category/category_list.dart';
+import 'package:video_browse/widgets/custom_back_button.dart';
 import 'package:video_browse/widgets/input_box.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -78,121 +79,126 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
                   ],
                 ),
               )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+            : Stack(
                 children: [
-                  Container(
-                    height: 40.0,
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: const Text(
-                      "UPLOAD YOU OWN CONTENT!",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: kColorInactive,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
+                  const CustomBackButton(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 40.0,
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: const Text(
+                          "UPLOAD YOU OWN CONTENT!",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: kColorInactive,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  InputBox(
-                    fun: update,
-                    hint: "Title",
-                  ),
-                  InputBox(
-                    fun: update,
-                    hint: "Description",
-                  ),
-                  CategoryList(
-                    categoryList: _categories.sublist(1),
-                    fun: setCategory,
-                    activeCategory: _category,
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  ToggleSwitch(
-                    activeBgColor: const [kColorActive],
-                    activeFgColor: kColorPrimary,
-                    inactiveBgColor: kColorInactive,
-                    inactiveFgColor: kColorPrimary,
-                    minWidth: 200.0,
-                    minHeight: 50.0,
-                    initialLabelIndex: _index,
-                    totalSwitches: 2,
-                    labels: const ['Comments On', 'Comments Off'],
-                    changeOnTap: true,
-                    onToggle: (index) {
-                      setState(() {
-                        _commentToggle = index == 0 ? true : false;
-                        _index = index!;
-                      });
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  ActionButton(
-                    buttonText: "Select Video",
-                    width: 150.0,
-                    routerPage: null,
-                    replace: false,
-                    fun: uploader.pickVideo,
-                  ),
-                  GestureDetector(
-                    child: Image.asset(
-                      "assets/icons/upload.png",
-                      color: kColorActive,
-                      width: 100.0,
-                    ),
-                    onTap: () async {
-                      if (_name.isEmpty ||
-                          _description.isEmpty ||
-                          uploader.isFilePicked()) {
-                        setState(() {
-                          _emptyInput = true;
-                        });
-                        return;
-                      }
-                      setState(() {
-                        isUploading = true;
-                      });
-                      VideoInfo newVideo = VideoInfo(
-                        name: _name,
-                        user: FetchUser().currentUser,
-                        description: _description,
-                        duration: 0,
-                        category: _category.getCategory(),
-                        commentToggle: _commentToggle,
-                      );
-                      await uploader.uploadVideo(newVideo);
-                      Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation1, animation2) =>
-                              VideoPlayScreen(
-                            video: newVideo,
-                          ),
+                      InputBox(
+                        fun: update,
+                        hint: "Title",
+                      ),
+                      InputBox(
+                        fun: update,
+                        hint: "Description",
+                      ),
+                      CategoryList(
+                        categoryList: _categories.sublist(1),
+                        fun: setCategory,
+                        activeCategory: _category,
+                      ),
+                      const SizedBox(
+                        height: 15.0,
+                      ),
+                      ToggleSwitch(
+                        activeBgColor: const [kColorActive],
+                        activeFgColor: kColorPrimary,
+                        inactiveBgColor: kColorInactive,
+                        inactiveFgColor: kColorPrimary,
+                        minWidth: 200.0,
+                        minHeight: 50.0,
+                        initialLabelIndex: _index,
+                        totalSwitches: 2,
+                        labels: const ['Comments On', 'Comments Off'],
+                        changeOnTap: true,
+                        onToggle: (index) {
+                          setState(() {
+                            _commentToggle = index == 0 ? true : false;
+                            _index = index!;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      ActionButton(
+                        buttonText: "Select Video",
+                        width: 150.0,
+                        routerPage: null,
+                        replace: false,
+                        fun: uploader.pickVideo,
+                      ),
+                      GestureDetector(
+                        child: Image.asset(
+                          "assets/icons/upload.png",
+                          color: kColorActive,
+                          width: 100.0,
                         ),
-                      );
-                    },
-                  ),
-                  _emptyInput
-                      ? const SizedBox(
-                          width: double.infinity,
-                          height: 20.0,
-                          child: Text(
-                            "Input fields cannot be empty!",
-                            style: TextStyle(
-                              color: kColorInactive,
+                        onTap: () async {
+                          if (_name.isEmpty ||
+                              _description.isEmpty ||
+                              uploader.isFilePicked()) {
+                            setState(() {
+                              _emptyInput = true;
+                            });
+                            return;
+                          }
+                          setState(() {
+                            isUploading = true;
+                          });
+                          VideoInfo newVideo = VideoInfo(
+                            name: _name,
+                            user: FetchUser().currentUser,
+                            description: _description,
+                            duration: 0,
+                            category: _category.getCategory(),
+                            commentToggle: _commentToggle,
+                          );
+                          await uploader.uploadVideo(newVideo);
+                          Navigator.pushReplacement(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) =>
+                                  VideoPlayScreen(
+                                video: newVideo,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : const SizedBox(
-                          height: 20.0,
-                        ),
+                          );
+                        },
+                      ),
+                      _emptyInput
+                          ? const SizedBox(
+                              width: double.infinity,
+                              height: 20.0,
+                              child: Text(
+                                "Input fields cannot be empty!",
+                                style: TextStyle(
+                                  color: kColorInactive,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          : const SizedBox(
+                              height: 20.0,
+                            ),
+                    ],
+                  ),
                 ],
               ),
       ),
