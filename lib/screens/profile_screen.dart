@@ -45,10 +45,10 @@ class ProfileScreen extends StatelessWidget {
               fun: null,
             ),
             const ActionButton(
-              buttonText: "Manage Your Videos",
+              buttonText: "Manage Your Own Content",
               routerPage: ManageVideosScreen(),
               replace: false,
-              width: 250.0,
+              width: 280.0,
               fun: null,
             ),
             ActionButton(
