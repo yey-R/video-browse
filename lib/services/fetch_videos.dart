@@ -27,10 +27,9 @@ class FetchVideos {
     for (var key in _value.keys) {
       if (_value[key] == null) continue;
 
-      dynamic views = _value[key]["view"] == null
-          ? <String>{}
-          : Set.from(_value[key]["view"]);
-      dynamic likes = _value[key]["likes"] == null
+      dynamic views =
+          _value[key]["view"] == 0 ? <String>{} : Set.from(_value[key]["view"]);
+      dynamic likes = _value[key]["likes"] == 0
           ? <String>{}
           : Set.from(_value[key]["likes"]);
 
@@ -59,6 +58,10 @@ class FetchVideos {
     } else {
       _videoList.add(info);
     }
+  }
+
+  void removeVideo(VideoInfo info) {
+    _videoList.remove(info);
   }
 
   List<VideoInfo> getVideos() {

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -52,9 +51,11 @@ class CreateUser {
     _dbRef = await _dbInstance.ref("users").get();
 
     // Check if the same username exists
-    for (String key in _dbRef.value.keys) {
-      if (_dbRef.value[key]['username'] == username) {
-        throw Exception("username-exists");
+    if (_dbRef.exists) {
+      for (String key in _dbRef.value.keys) {
+        if (_dbRef.value[key]['username'] == username) {
+          throw Exception("username-exists");
+        }
       }
     }
 
