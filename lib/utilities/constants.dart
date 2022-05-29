@@ -15,3 +15,4 @@ const invalidUsername = "Username is not valid or already taken!";
 const wrongCredit = "E-Mail or Password is wrong!";
 const emptyInput = "Input fields cannot be empty!";
 const disabledComments = "Comments are disabled by video creator";
+const uploadContent = "UPLOAD YOUR OWN CONTENT!";
