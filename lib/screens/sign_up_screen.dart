@@ -19,6 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   dynamic password;
   dynamic username;
   dynamic profilePic;
+  bool isCreating = false;
   bool validEmail = true;
   bool validPassword = true;
   bool validUsername = true;
@@ -59,6 +60,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void createUser() async {
     if (!register.checkCredentials(email, username, password)) return;
+    setState(() {
+      isCreating = true;
+    });
     try {
       await register.createUser();
       Navigator.pop(context);
@@ -69,6 +73,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } on Exception {
       showError("username");
     }
+    setState(() {
+      isCreating = false;
+    });
   }
 
   @override
@@ -130,12 +137,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hint: "Password",
                   obscure: true,
                 ),
+                SizedBox(
+                  height: 1.0 * AppScale.heightMultiplier,
+                ),
                 ActionButton(
-                  buttonText: "Sign Up",
+                  buttonImage: isCreating
+                      ? const CircularProgressIndicator(
+                          color: kColorActive,
+                        )
+                      : null,
+                  buttonText: isCreating ? null : "Sign Up",
                   routerPage: null,
                   replace: false,
                   width: 40.0 * AppScale.widthMultiplier,
-                  fun: createUser,
+                  fun: isCreating ? null : createUser,
+                ),
+                SizedBox(
+                  height: 1.5 * AppScale.heightMultiplier,
                 ),
                 validEmail
                     ? const SizedBox.shrink()
