@@ -67,7 +67,6 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
       name: _name,
       user: FetchUser().currentUser,
       description: _description,
-      duration: 0,
       category: _category.getCategory(),
       commentToggle: _commentToggle,
     );
