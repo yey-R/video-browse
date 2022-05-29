@@ -6,13 +6,11 @@ import 'package:video_browse/widgets/bottom_navigation_bar/navigation_bar_button
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final bool isHome;
-  final bool isTrends;
   final bool isProfile;
   const CustomBottomNavigationBar({
     Key? key,
     this.isHome = false,
     this.isProfile = false,
-    this.isTrends = false,
   }) : super(key: key);
 
   @override
@@ -37,10 +35,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
             routerPage: const MainScreen(),
           ),
           NavigationBarButton(
-              hasIcon: isProfile,
-              iconName: "profile",
-              title: "Profile",
-              routerPage: const ProfileScreen()),
+            hasIcon: isProfile,
+            iconName: "profile",
+            title: "Profile",
+            routerPage: const ProfileScreen(),
+          ),
         ],
       ),
     );

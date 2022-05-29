@@ -11,7 +11,9 @@ class SignUpButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SignUpScreen()),
+          MaterialPageRoute(
+            builder: (context) => const SignUpScreen(),
+          ),
         );
       },
       child: const Text(

@@ -30,7 +30,6 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   dynamic videoPlayerController;
   dynamic chewieController;
   dynamic playerWidget;
-  double _height = 120.0;
   bool isComments = true;
   String comment = "";
   bool flag = false;
