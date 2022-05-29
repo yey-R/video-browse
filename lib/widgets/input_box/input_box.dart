@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class InputBox extends StatefulWidget {
   final Function fun;
   final String hint;
-
+  final int maxLength;
   const InputBox({
     Key? key,
     required this.fun,
     required this.hint,
+    required this.maxLength,
   }) : super(key: key);
 
   @override
@@ -16,28 +18,25 @@ class InputBox extends StatefulWidget {
 }
 
 class _InputBoxState extends State<InputBox> {
-  dynamic flag;
   @override
   void initState() {
     super.initState();
-    flag = widget.hint == "Title";
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 12.0,
-        vertical: 10.0,
+      margin: EdgeInsets.symmetric(
+        horizontal: 2.9 * AppScale.widthMultiplier,
+        vertical: 1.1 * AppScale.heightMultiplier,
       ),
       child: TextField(
-        maxLength: flag ? 30 : 250,
+        maxLength: widget.maxLength,
         keyboardType: TextInputType.multiline,
         maxLines: null,
         onChanged: (value) {
           widget.fun(
             value,
-            flag,
           );
         },
         style: const TextStyle(
@@ -52,7 +51,8 @@ class _InputBoxState extends State<InputBox> {
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius:
+                BorderRadius.circular(1.1 * AppScale.heightMultiplier),
           ),
         ),
       ),

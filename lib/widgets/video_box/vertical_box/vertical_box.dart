@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/video_info.dart';
 import 'package:video_browse/screens/video_play_screen.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
-import 'package:video_browse/widgets/video_list/info_box.dart';
+import 'package:video_browse/widgets/video_box/info_box.dart';
 
-class VideoBox extends StatelessWidget {
+class VerticalBox extends StatelessWidget {
   final VideoInfo video;
   final Function fun;
 
-  const VideoBox({
+  const VerticalBox({
     Key? key,
     required this.video,
     required this.fun,
@@ -17,42 +18,42 @@ class VideoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: 14.0,
-        horizontal: 6.0,
+      margin: EdgeInsets.symmetric(
+        vertical: 1.6 * AppScale.heightMultiplier,
+        horizontal: 1.5 * AppScale.widthMultiplier,
       ),
       child: Column(
         children: [
           Row(
             children: [
               video.user.getProfilePicture(),
-              const SizedBox(
-                width: 6.0,
+              SizedBox(
+                width: 1.5 * AppScale.widthMultiplier,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     video.getName(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: kColorOwnerText,
-                      fontSize: 18.0,
+                      fontSize: 2.0 * AppScale.heightMultiplier,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     video.getOwner().getUsername(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: kColorVideoText,
-                      fontSize: 15.0,
+                      fontSize: 1.7 * AppScale.textMultiplier,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(
-            height: 6.0,
+          SizedBox(
+            height: 0.7 * AppScale.heightMultiplier,
           ),
           AspectRatio(
             aspectRatio: 16 / 9,
@@ -76,15 +77,13 @@ class VideoBox extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25.0),
                 child: Image.network(
                   video.getThumbnail(),
-                  height: 200,
-                  width: 400,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            height: 6.0,
+          SizedBox(
+            height: 0.7 * AppScale.heightMultiplier,
           ),
           Row(
             children: [
@@ -102,7 +101,9 @@ class VideoBox extends StatelessWidget {
                 isMainPage: true,
               ),
               SizedBox(
-                width: video.getCommentToggle() ? 4.0 : 0,
+                width: video.getCommentToggle()
+                    ? 1.0 * AppScale.widthMultiplier
+                    : 0,
               ),
               video.getCommentToggle()
                   ? InfoBox(
@@ -114,9 +115,13 @@ class VideoBox extends StatelessWidget {
             ],
           ),
           Container(
-            margin: const EdgeInsets.only(top: 18.0, left: 12.0, right: 12.0),
+            margin: EdgeInsets.only(
+              top: 2.0 * AppScale.heightMultiplier,
+              left: 2.9 * AppScale.widthMultiplier,
+              right: 2.9 * AppScale.widthMultiplier,
+            ),
             width: double.infinity,
-            height: 2,
+            height: 0.23 * AppScale.heightMultiplier,
             color: kColorBoxBorder,
           ),
         ],

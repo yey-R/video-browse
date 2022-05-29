@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/services/fetch_user.dart';
+import 'package:video_browse/utilities/app_scale.dart';
+import 'package:video_browse/utilities/constants.dart';
 
 class User {
   final String _uid;
@@ -23,13 +25,23 @@ class User {
     return _uid;
   }
 
-  Widget getProfilePicture({flag = false}) {
-    return user['profilePic'].isEmpty
-        ? const Icon(Icons.person)
-        : CircleAvatar(
-            radius: flag ? 100.0 : 20.0,
-            backgroundImage: NetworkImage(
+  Widget getProfilePicture({isBig = false}) {
+    return CircleAvatar(
+      child: user['profilePic'].isEmpty
+          ? const Icon(
+              Icons.person,
+              color: Colors.white,
+            )
+          : null,
+      radius: isBig
+          ? 11.0 * AppScale.heightMultiplier
+          : 2.7 * AppScale.heightMultiplier,
+      backgroundColor: kColorActive,
+      backgroundImage: user['profilePic'].isEmpty
+          ? null
+          : NetworkImage(
               user['profilePic'],
-            ));
+            ),
+    );
   }
 }

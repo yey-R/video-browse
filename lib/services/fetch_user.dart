@@ -36,4 +36,10 @@ class FetchUser {
     }
     return null;
   }
+
+  void reset() {
+    currentUser = null;
+    user = null;
+    uid = null;
+  }
 }

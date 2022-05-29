@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/video_info.dart';
 import 'package:video_browse/services/fetch_user.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
-import 'package:video_browse/widgets/video_list/info_box.dart';
+import 'package:video_browse/widgets/video_box/info_box.dart';
 
 class Description extends StatefulWidget {
   final VideoInfo video;
@@ -23,13 +24,15 @@ class _DescriptionState extends State<Description> {
   @override
   void initState() {
     super.initState();
-    _height = widget.video.getDesc().length > 35 ? 110.0 : 100.0;
+    _height = widget.video.getDesc().length > 35
+        ? 12.2 * AppScale.heightMultiplier
+        : 11.1 * AppScale.heightMultiplier;
     _isLiked = widget.video.isLiked(FetchUser().uid);
   }
 
-  void update() {
+  void update() async {
+    await widget.video.updateLike(FetchUser().uid);
     setState(() {
-      widget.video.updateLike(FetchUser().uid);
       _isLiked = widget.video.isLiked(FetchUser().uid);
     });
     if (widget.fun != null) widget.fun();
@@ -42,16 +45,16 @@ class _DescriptionState extends State<Description> {
       curve: Curves.fastOutSlowIn,
       height: _height,
       width: double.infinity,
-      margin: const EdgeInsets.only(
-        top: 10.0,
-        left: 15.0,
-        right: 15.0,
+      margin: EdgeInsets.only(
+        top: 1.1 * AppScale.heightMultiplier,
+        left: 3.65 * AppScale.widthMultiplier,
+        right: 3.65 * AppScale.widthMultiplier,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      decoration: const BoxDecoration(
+      padding: EdgeInsets.symmetric(horizontal: 6.1 * AppScale.widthMultiplier),
+      decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.all(
-          Radius.circular(30),
+          Radius.circular(3.3 * AppScale.heightMultiplier),
         ),
       ),
       child: Column(
@@ -61,8 +64,8 @@ class _DescriptionState extends State<Description> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               widget.video.getOwner().getProfilePicture(),
-              const SizedBox(
-                width: 6.0,
+              SizedBox(
+                width: 1.45 * AppScale.widthMultiplier,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,17 +73,17 @@ class _DescriptionState extends State<Description> {
                 children: [
                   Text(
                     widget.video.getName(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: kColorOwnerText,
-                      fontSize: 18.0,
+                      fontSize: 2.0 * AppScale.textMultiplier,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     widget.video.getOwner().getUsername(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: kColorVideoText,
-                      fontSize: 15.0,
+                      fontSize: 1.7 * AppScale.textMultiplier,
                     ),
                   ),
                 ],
@@ -91,8 +94,8 @@ class _DescriptionState extends State<Description> {
                 value: widget.video.getView(),
                 isMainPage: false,
               ),
-              const SizedBox(
-                width: 10.0,
+              SizedBox(
+                width: 2.4 * AppScale.widthMultiplier,
               ),
               GestureDetector(
                 child: InfoBox(
@@ -107,8 +110,8 @@ class _DescriptionState extends State<Description> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 10.0,
+          SizedBox(
+            height: 1.1 * AppScale.heightMultiplier,
           ),
           Expanded(
             child: Align(
@@ -116,9 +119,9 @@ class _DescriptionState extends State<Description> {
               child: Text(
                 widget.video.getDesc(),
                 softWrap: true,
-                style: const TextStyle(
+                style: TextStyle(
                   color: kColorOwnerText,
-                  fontSize: 15.0,
+                  fontSize: 1.7 * AppScale.textMultiplier,
                 ),
                 textAlign: TextAlign.start,
               ),
@@ -127,15 +130,17 @@ class _DescriptionState extends State<Description> {
           widget.video.getDesc().length > 35
               ? GestureDetector(
                   child: Icon(
-                    _height == 110
+                    _height == 12.2 * AppScale.heightMultiplier
                         ? Icons.arrow_drop_down
                         : Icons.arrow_drop_up,
                     color: kColorOwnerText,
-                    size: 30.0,
+                    size: 3.3 * AppScale.heightMultiplier,
                   ),
                   onTap: () {
                     setState(() {
-                      _height = _height == 145.0 ? 110.0 : 145.0;
+                      _height = _height == 16.1 * AppScale.heightMultiplier
+                          ? 12.2 * AppScale.heightMultiplier
+                          : 16.1 * AppScale.heightMultiplier;
                     });
                   },
                 )

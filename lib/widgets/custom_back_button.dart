@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class CustomBackButton extends StatelessWidget {
@@ -7,9 +8,9 @@ class CustomBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        left: 15.0,
-        top: 15.0,
+      margin: EdgeInsets.only(
+        left: 3.65 * AppScale.widthMultiplier,
+        top: 1.65 * AppScale.heightMultiplier,
       ),
       alignment: Alignment.topLeft,
       child: GestureDetector(
@@ -18,7 +19,7 @@ class CustomBackButton extends StatelessWidget {
           child: Image.asset(
             "assets/icons/back.png",
             color: kColorOwnerText,
-            width: 35.0,
+            width: 8.5 * AppScale.widthMultiplier,
           ),
         ),
         onTap: () {

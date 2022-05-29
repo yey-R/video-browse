@@ -47,14 +47,14 @@ class VideoInfo {
     comments.add(comment);
   }
 
-  void updateView(String uid) async {
+  Future<void> updateView(String uid) async {
     if (!views.contains(uid)) {
       views.add(uid);
       await UploadVideo().updateMetadata(this);
     }
   }
 
-  void updateLike(String uid) async {
+  Future<void> updateLike(String uid) async {
     if (likes.contains(uid)) {
       likes.remove(uid);
     } else {
@@ -143,7 +143,7 @@ class VideoInfo {
   }
 
   dynamic getViewData() {
-    if (views.isEmpty) return 0;
+    if (views.isEmpty) return [];
     List<String> temp = <String>[];
     for (String view in views) {
       temp.add(view);
@@ -152,7 +152,7 @@ class VideoInfo {
   }
 
   dynamic getLikeData() {
-    if (likes.isEmpty) return 0;
+    if (likes.isEmpty) return [];
     List<String> temp = <String>[];
     for (String like in likes) {
       temp.add(like);

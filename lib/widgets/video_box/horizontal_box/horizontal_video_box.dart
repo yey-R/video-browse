@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_browse/models/video_info.dart';
 import 'package:video_browse/screens/video_play_screen.dart';
 import 'package:video_browse/services/remove_video.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class HorizontalBox extends StatelessWidget {
@@ -22,7 +23,7 @@ class HorizontalBox extends StatelessWidget {
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: const Text('Please Confirm'),
-            content: const Text('Are you sure to remove the video?'),
+            content: const Text('Are you sure to remove this video?'),
             actions: [
               TextButton(
                 onPressed: () async {
@@ -47,7 +48,10 @@ class HorizontalBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        margin: const EdgeInsets.all(10.0),
+        margin: EdgeInsets.symmetric(
+          horizontal: 2.4 * AppScale.widthMultiplier,
+          vertical: 1.1 * AppScale.heightMultiplier,
+        ),
         child: Stack(
           children: [
             Row(
@@ -56,24 +60,24 @@ class HorizontalBox extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.0),
                   child: Image.network(
                     info.getThumbnail(),
-                    height: 100,
-                    width: 200,
+                    height: 11.1 * AppScale.heightMultiplier,
+                    width: 48.6 * AppScale.widthMultiplier,
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(
-                  width: 10.0,
+                SizedBox(
+                  width: 2.45 * AppScale.widthMultiplier,
                 ),
                 SizedBox(
-                  height: 100,
+                  height: 11.1 * AppScale.heightMultiplier,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         info.getName(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: kColorOwnerText,
-                          fontSize: 18.0,
+                          fontSize: 2.0 * AppScale.textMultiplier,
                           fontWeight: FontWeight.bold,
                         ),
                         softWrap: true,
@@ -83,16 +87,16 @@ class HorizontalBox extends StatelessWidget {
                       ),
                       Text(
                         info.getOwner().getUsername(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: kColorVideoText,
-                          fontSize: 15.0,
+                          fontSize: 1.7 * AppScale.heightMultiplier,
                         ),
                       ),
                       Text(
-                        "${info.getDate()} · ${info.getView()} views",
-                        style: const TextStyle(
+                        "${info.getView()} views · ${info.getDate()}",
+                        style: TextStyle(
                           color: kColorVideoText,
-                          fontSize: 15.0,
+                          fontSize: 1.7 * AppScale.heightMultiplier,
                         ),
                       ),
                     ],
@@ -101,7 +105,7 @@ class HorizontalBox extends StatelessWidget {
               ],
             ),
             Positioned(
-              right: 15.0,
+              right: 3.65 * AppScale.widthMultiplier,
               child: GestureDetector(
                 child: const Icon(
                   Icons.delete,

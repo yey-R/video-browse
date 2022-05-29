@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:video_browse/models/category.dart';
 import 'package:video_browse/services/fetch_categories.dart';
 import 'package:video_browse/services/fetch_videos.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:video_browse/widgets/bottom_navigation_bar/custom_bottom_navigation_bar.dart';
 import 'package:video_browse/widgets/category/category_list.dart';
-import 'package:video_browse/widgets/video_list/video_list.dart';
+import 'package:video_browse/widgets/video_box/vertical_box/vertical_box_list.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
@@ -52,10 +53,10 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: kColorPrimary,
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.only(
-            left: 10.0,
-            right: 10.0,
-            top: 6.0,
+          margin: EdgeInsets.only(
+            left: 2.5 * AppScale.widthMultiplier,
+            right: 2.5 * AppScale.widthMultiplier,
+            top: 0.65 * AppScale.heightMultiplier,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,27 +67,30 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   Image.asset(
                     "assets/app.gif",
-                    width: 50.0,
+                    width: 12.0 * AppScale.widthMultiplier,
                     color: kColorActive,
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 10.0, top: 6.0),
+                    margin: EdgeInsets.only(
+                      left: 2.4 * AppScale.widthMultiplier,
+                      top: 0.65 * AppScale.heightMultiplier,
+                    ),
                     child: Image.asset(
                       "assets/icons/icon_app_name.png",
-                      width: 100.0,
+                      width: 24.3 * AppScale.widthMultiplier,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10.0,
+              SizedBox(
+                height: 1.1 * AppScale.heightMultiplier,
               ),
               CategoryList(
                 categoryList: _categories,
                 fun: setFilter,
                 activeCategory: _activeCategory,
               ),
-              VideoList(
+              VerticalBoxList(
                 videos: _videos,
                 category: _activeCategory,
                 fun: refresh,

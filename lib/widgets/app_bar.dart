@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -14,20 +15,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Scaffold(
       key: _scaffoldKey,
       body: SizedBox(
-        height: 80.0,
+        height: 8.9 * AppScale.heightMultiplier,
         child: Stack(
           children: <Widget>[
             Container(
-              color: Colors.blue.shade900,
               width: MediaQuery.of(context).size.width,
-              height: 80.0,
+              height: 8.9 * AppScale.heightMultiplier,
               alignment: Alignment.centerLeft,
               child: SafeArea(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      width: 10.0,
+                    SizedBox(
+                      width: 2.4 * AppScale.widthMultiplier,
                     ),
                     Image.asset(
                       'assets/2.gif',

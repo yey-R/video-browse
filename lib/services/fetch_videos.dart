@@ -67,4 +67,9 @@ class FetchVideos {
   List<VideoInfo> getVideos() {
     return _videoList;
   }
+
+  void reset() {
+    _videoList.clear();
+    _value = null;
+  }
 }

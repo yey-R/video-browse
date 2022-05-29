@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class InfoBox extends StatelessWidget {
@@ -19,18 +20,20 @@ class InfoBox extends StatelessWidget {
       [
         Image.asset(
           icon,
-          width: isMainPage ? 18.0 : 30.0,
+          width: isMainPage
+              ? 4.4 * AppScale.widthMultiplier
+              : 7.2 * AppScale.widthMultiplier,
           color: isLiked ? Colors.red : kColorActive,
         ),
-        const SizedBox(
-          width: 3.0,
+        SizedBox(
+          width: 0.7 * AppScale.widthMultiplier,
         ),
         Text(
           "$value",
-          style: const TextStyle(
-            color: Color(0xFF959595),
+          style: TextStyle(
+            color: const Color(0xFF959595),
             fontWeight: FontWeight.bold,
-            fontSize: 15.0,
+            fontSize: 1.7 * AppScale.textMultiplier,
           ),
         )
       ],

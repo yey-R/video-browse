@@ -12,3 +12,6 @@ const kColorLike = Color(0xFFF38787);
 const invalidEmail = "E-Mail adress is not valid or already used!";
 const invalidPassword = "Password is not valid!";
 const invalidUsername = "Username is not valid or already taken!";
+const wrongCredit = "E-Mail or Password is wrong!";
+const emptyInput = "Input fields cannot be empty!";
+const disabledComments = "Comments are disabled by video creator";

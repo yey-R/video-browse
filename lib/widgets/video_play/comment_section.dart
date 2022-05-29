@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class CommentSection extends StatefulWidget {
@@ -23,28 +24,35 @@ class _CommentSectionState extends State<CommentSection> {
   void initState() {
     super.initState();
     activeTitle = widget.activeTitle;
-    createButtons();
   }
 
   void createButtons() {
+    buttons.clear();
     for (String title in titles) {
       Widget button = GestureDetector(
         child: Container(
-          margin: const EdgeInsets.only(left: 20.0),
-          height: 43.0,
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            title,
-            style: TextStyle(
-              color: title == activeTitle ? kColorBoxBorder : kColorInactive,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
+          margin: EdgeInsets.symmetric(
+            horizontal: 4.9 * AppScale.widthMultiplier,
+          ),
+          height: 6.0 * AppScale.heightMultiplier,
+          padding: EdgeInsets.symmetric(
+            horizontal: 2.4 * AppScale.widthMultiplier,
+            vertical: 1.1 * AppScale.heightMultiplier,
+          ),
+          child: Center(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: title == activeTitle ? kColorBoxBorder : kColorInactive,
+                fontSize: 2.2 * AppScale.textMultiplier,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           decoration: BoxDecoration(
             color: title == activeTitle ? kColorActive : Colors.transparent,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(30.0),
+            borderRadius: BorderRadius.all(
+              Radius.circular(3.3 * AppScale.heightMultiplier),
             ),
           ),
         ),
@@ -63,6 +71,7 @@ class _CommentSectionState extends State<CommentSection> {
 
   @override
   Widget build(BuildContext context) {
+    createButtons();
     return Row(
       children: buttons,
     );

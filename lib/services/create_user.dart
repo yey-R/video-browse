@@ -81,7 +81,7 @@ class CreateUser {
       _pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       _filePath = _pickedFile.path;
     } catch (e) {
-      return "";
+      _filePath = "";
     }
     return _filePath;
   }

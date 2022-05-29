@@ -1,37 +1,52 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:video_browse/firebase_options.dart';
+import 'package:video_browse/screens/loading_screen.dart';
+import 'package:video_browse/utilities/app_scale.dart';
+import 'package:video_browse/utilities/constants.dart';
 import 'package:video_browse/widgets/action_button.dart';
-import 'package:video_browse/widgets/login/login_input.dart';
+import 'package:video_browse/widgets/input_box/login_input_box.dart';
+import 'package:video_browse/widgets/sign_up_button.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({
-    Key? key,
-  }) : super(key: key);
+  final bool hasError;
+  const LoginScreen({Key? key, this.hasError = false}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isLogin = false;
+  dynamic email;
+  dynamic password;
+  dynamic hasError;
 
   @override
   void initState() {
     super.initState();
-    initFirebase();
+    hasError = widget.hasError;
   }
 
-  void initFirebase() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
+  void setPassword(String password) {
+    this.password = password;
+  }
+
+  void setEmail(String email) {
+    this.email = email;
+  }
+
+  void login() {
+    if (email == null && password == null) {
+      setState(() {
+        hasError = true;
+      });
+      return;
+    }
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) =>
+            LoadingScreen(email: email, password: password),
+      ),
     );
-  }
-
-  void setLogin() {
-    setState(() {
-      isLogin = true;
-    });
   }
 
   @override
@@ -50,43 +65,42 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          !isLogin
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 310,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/app.gif",
-                          width: 100,
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Image.asset(
-                          "assets/icons/icon_app_name.png",
-                          width: 150,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 250,
-                    ),
-                    ActionButton(
-                      buttonText: "Log in",
-                      routerPage: null,
-                      replace: true,
-                      width: 150,
-                      fun: setLogin,
-                    ),
-                  ],
-                )
-              : LoginInput(),
+          SizedBox(
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/app.gif",
+                  width: 25.0 * AppScale.widthMultiplier,
+                ),
+                LoginInputBox(
+                  fun: setEmail,
+                  hint: "E-Mail",
+                ),
+                LoginInputBox(
+                  fun: setPassword,
+                  hint: "Password",
+                  obscure: true,
+                ),
+                const SignUpButton(),
+                ActionButton(
+                  buttonText: "Log in",
+                  routerPage: null,
+                  replace: true,
+                  width: 37.0 * AppScale.widthMultiplier,
+                  fun: login,
+                ),
+                hasError
+                    ? const Text(
+                        wrongCredit,
+                        style: TextStyle(color: kColorOwnerText),
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:video_browse/models/user.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class Comment {
   final User _owner;
@@ -18,7 +19,8 @@ class Comment {
     return _comment;
   }
 
-  DateTime getDate() {
-    return DateTime.fromMillisecondsSinceEpoch(date);
+  String getDate() {
+    final upload = DateTime.fromMillisecondsSinceEpoch(date);
+    return timeago.format(upload);
   }
 }

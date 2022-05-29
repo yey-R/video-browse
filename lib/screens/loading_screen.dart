@@ -7,6 +7,7 @@ import 'package:video_browse/services/fetch_categories.dart';
 import 'package:video_browse/services/fetch_login.dart';
 import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -51,7 +52,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => const LoginScreen(),
+          pageBuilder: (context, animation1, animation2) => const LoginScreen(
+            hasError: true,
+          ),
         ),
       );
     }
@@ -64,7 +67,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       body: Center(
         child: Image.asset(
           "assets/app.gif",
-          width: 150.0,
+          width: 36.5 * AppScale.widthMultiplier,
         ),
       ),
     );

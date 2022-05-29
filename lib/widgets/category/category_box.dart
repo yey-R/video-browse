@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/category.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class CategoryBox extends StatelessWidget {
@@ -18,15 +19,14 @@ class CategoryBox extends StatelessWidget {
     return TextButton(
       onPressed: () => fun(category),
       child: Container(
-        width: category.getCategory().length * 22,
-        margin: const EdgeInsets.only(
-          right: 2.5,
-          left: 2.5,
+        width: category.getCategory().length * 21,
+        margin: EdgeInsets.symmetric(
+          horizontal: 0.6 * AppScale.widthMultiplier,
         ),
         decoration: BoxDecoration(
           color: isActive ? kColorActive : kColorPrimary,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(30.0),
+          borderRadius: BorderRadius.all(
+            Radius.circular(3.3 * AppScale.heightMultiplier),
           ),
         ),
         child: Center(
@@ -34,7 +34,7 @@ class CategoryBox extends StatelessWidget {
             category.getCategory(),
             style: TextStyle(
               color: isActive ? kColorPrimary : kColorInactive,
-              fontSize: 15.0,
+              fontSize: 1.7 * AppScale.textMultiplier,
               fontWeight: FontWeight.bold,
             ),
           ),

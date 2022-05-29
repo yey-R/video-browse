@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/utilities/constants.dart';
-import 'package:video_browse/widgets/horizontal_video_box/horizontal_box_list.dart';
+import 'package:video_browse/widgets/custom_back_button.dart';
+import 'package:video_browse/widgets/video_box/horizontal_box/horizontal_box_list.dart';
 
 class ManageVideosScreen extends StatefulWidget {
   const ManageVideosScreen({Key? key}) : super(key: key);
@@ -21,26 +22,7 @@ class _ManageVideosScreenState extends State<ManageVideosScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.only(
-                left: 15.0,
-                top: 15.0,
-              ),
-              alignment: Alignment.topLeft,
-              child: GestureDetector(
-                child: CircleAvatar(
-                  backgroundColor: kColorPrimary,
-                  child: Image.asset(
-                    "assets/icons/back.png",
-                    color: kColorOwnerText,
-                    width: 35.0,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
+            const CustomBackButton(),
             HorizontalBoxList(fun: update),
           ],
         ),

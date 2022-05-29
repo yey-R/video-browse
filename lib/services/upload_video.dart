@@ -106,4 +106,9 @@ class UploadVideo {
   bool isFilePicked() {
     return _pickedFile == null;
   }
+
+  void reset() {
+    _pickedFile = null;
+    _filePath = null;
+  }
 }

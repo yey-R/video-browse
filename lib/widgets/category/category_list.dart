@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/category.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/widgets/category/category_box.dart';
 
 class CategoryList extends StatelessWidget {
@@ -29,7 +30,7 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 6.0 * AppScale.heightMultiplier,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: createCategories(),

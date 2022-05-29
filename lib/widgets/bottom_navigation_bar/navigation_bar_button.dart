@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class NavigationBarButton extends StatelessWidget {
@@ -36,15 +37,17 @@ class NavigationBarButton extends StatelessWidget {
                 ? Image.asset(
                     "assets/icons/$iconName.png",
                     color: kColorActive,
-                    width: 20.0,
+                    width: 4.9 * AppScale.widthMultiplier,
                   )
                 : const SizedBox.shrink(),
-            hasIcon ? const SizedBox(width: 4.0) : const SizedBox.shrink(),
+            hasIcon
+                ? SizedBox(width: 1.0 * AppScale.widthMultiplier)
+                : const SizedBox.shrink(),
             Text(
               title,
               style: TextStyle(
                 color: hasIcon ? kColorActive : kColorInactive,
-                fontSize: 16.0,
+                fontSize: 1.8 * AppScale.textMultiplier,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,

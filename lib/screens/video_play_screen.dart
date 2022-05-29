@@ -3,10 +3,11 @@ import 'package:video_browse/models/comment.dart';
 import 'package:video_browse/models/video_info.dart';
 import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_browse/widgets/custom_back_button.dart';
-import 'package:video_browse/widgets/horizontal_video_box/horizontal_video_box.dart';
+import 'package:video_browse/widgets/video_box/horizontal_box/horizontal_video_box.dart';
 import 'package:video_browse/widgets/video_play/comment_box.dart';
 import 'package:video_browse/widgets/video_play/comment_section.dart';
 import 'package:video_browse/widgets/video_play/description.dart';
@@ -30,7 +31,6 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   dynamic chewieController;
   dynamic playerWidget;
   double _height = 120.0;
-  bool commentToggle = false;
   bool isComments = true;
   String comment = "";
   bool flag = false;
@@ -47,11 +47,10 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
   void initState() {
     super.initState();
     createVideoPlayer();
-    widget.video.updateView(FetchUser().uid);
-    commentToggle = widget.video.getCommentToggle();
   }
 
   void createVideoPlayer() async {
+    await widget.video.updateView(FetchUser().uid);
     videoPlayerController =
         VideoPlayerController.network(widget.video.getURL());
 
@@ -129,7 +128,6 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                   aspectRatio: 16 / 9,
                   child: Container(
                     color: Colors.black,
-                    height: 300,
                     width: double.infinity,
                     child: placeHolder,
                   ),
@@ -140,31 +138,35 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                 ),
                 Expanded(
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: kColorBoxBorder,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.0),
-                        topRight: Radius.circular(30.0),
+                        topLeft:
+                            Radius.circular(3.3 * AppScale.heightMultiplier),
+                        topRight:
+                            Radius.circular(3.3 * AppScale.heightMultiplier),
                       ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const SizedBox(
-                          height: 25.0,
-                        ),
-                        CommentSection(
-                            fun: updateSection, activeTitle: "Comments"),
-                        const SizedBox(
-                          height: 10.0,
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: 2.8 * AppScale.heightMultiplier,
+                            bottom: 1.1 * AppScale.heightMultiplier,
+                          ),
+                          child: CommentSection(
+                            fun: updateSection,
+                            activeTitle: "Comments",
+                          ),
                         ),
                         Expanded(
                           child: Stack(
                             fit: StackFit.passthrough,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             children: [
-                              commentToggle || !isComments
+                              widget.video.getCommentToggle() || !isComments
                                   ? ListView(
                                       children: isComments
                                           ? getComments()
@@ -174,24 +176,29 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                                       children: [
                                         Image.asset(
                                           "assets/icons/comments_off.png",
-                                          width: 250.0,
+                                          width:
+                                              60.0 * AppScale.widthMultiplier,
                                           color: kColorPrimary,
                                         ),
-                                        const SizedBox(
-                                          height: 20.0,
+                                        SizedBox(
+                                          height:
+                                              2.2 * AppScale.heightMultiplier,
                                         ),
-                                        const Text(
-                                          "Comments are disabled by video creator",
+                                        Text(
+                                          disabledComments,
                                           style: TextStyle(
                                             color: kColorVideoText,
-                                            fontSize: 15.0,
+                                            fontSize:
+                                                1.7 * AppScale.textMultiplier,
                                             fontWeight: FontWeight.bold,
                                             fontStyle: FontStyle.italic,
                                           ),
                                         ),
                                       ],
                                     ),
-                              flag && isComments && commentToggle
+                              flag &&
+                                      isComments &&
+                                      widget.video.getCommentToggle()
                                   ? Positioned(
                                       bottom: 0.0,
                                       child: Row(
@@ -201,11 +208,14 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Container(
-                                            height: 70,
-                                            width: 300,
+                                            height:
+                                                7.8 * AppScale.heightMultiplier,
+                                            width:
+                                                73.0 * AppScale.widthMultiplier,
                                             alignment: Alignment.center,
-                                            margin: const EdgeInsets.symmetric(
-                                              horizontal: 20.0,
+                                            margin: EdgeInsets.symmetric(
+                                              horizontal: 4.9 *
+                                                  AppScale.widthMultiplier,
                                             ),
                                             child: flag
                                                 ? TextField(
@@ -229,9 +239,10 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                                                           OutlineInputBorder(
                                                         borderSide:
                                                             BorderSide.none,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
+                                                        borderRadius: BorderRadius
+                                                            .circular(1.1 *
+                                                                AppScale
+                                                                    .heightMultiplier),
                                                       ),
                                                     ),
                                                     onChanged: (value) {
@@ -246,19 +257,21 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                                       ),
                                     )
                                   : const SizedBox.shrink(),
-                              isComments && commentToggle
+                              isComments && widget.video.getCommentToggle()
                                   ? Positioned(
-                                      bottom: 5.0,
-                                      right: 15.0,
+                                      bottom: 0.55 * AppScale.heightMultiplier,
+                                      right: 3.65 * AppScale.widthMultiplier,
                                       child: GestureDetector(
                                         child: CircleAvatar(
-                                          radius: 30.0,
+                                          radius:
+                                              3.3 * AppScale.heightMultiplier,
                                           backgroundColor: kColorActive,
                                           child: Image.asset(
                                             flag
                                                 ? "assets/icons/check.png"
                                                 : "assets/icons/write.png",
-                                            width: 25.0,
+                                            width:
+                                                6.1 * AppScale.widthMultiplier,
                                             color: kColorPrimary,
                                           ),
                                         ),
@@ -277,8 +290,9 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                                             widget.video
                                                 .addComment(tempComment);
                                             comment = "";
-                                            if (widget.fun != null)
+                                            if (widget.fun != null) {
                                               widget.fun();
+                                            }
                                           });
                                         },
                                       ),

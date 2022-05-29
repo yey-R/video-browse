@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:video_browse/models/video_info.dart';
 import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
-import 'package:video_browse/widgets/horizontal_video_box/horizontal_video_box.dart';
+import 'package:video_browse/utilities/app_scale.dart';
+import 'package:video_browse/widgets/video_box/horizontal_box/horizontal_video_box.dart';
 
 class HorizontalBoxList extends StatelessWidget {
   final dynamic fun;
@@ -34,7 +35,8 @@ class HorizontalBoxList extends StatelessWidget {
         children: createVideos(),
       ),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height - 100,
+      height: MediaQuery.of(context).size.height -
+          (11.11 * AppScale.heightMultiplier),
     );
   }
 }

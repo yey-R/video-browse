@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/screens/main_screen.dart';
 import 'package:video_browse/screens/profile_screen.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/widgets/bottom_navigation_bar/navigation_bar_button.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -17,13 +18,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70.0,
+      height: 7.8 * AppScale.heightMultiplier,
       width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        color: Color(0xFF424242),
+      decoration: BoxDecoration(
+        color: const Color(0xFF424242),
         borderRadius: BorderRadius.all(
           Radius.circular(
-            45,
+            5.0 * AppScale.heightMultiplier,
           ),
         ),
       ),

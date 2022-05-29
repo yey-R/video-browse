@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/comment.dart';
+import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
 class CommentBox extends StatelessWidget {
@@ -11,19 +12,19 @@ class CommentBox extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 20.0,
+          margin: EdgeInsets.symmetric(
+            horizontal: 4.9 * AppScale.widthMultiplier,
           ),
           width: double.infinity,
-          height: 55.0,
+          height: 6.1 * AppScale.heightMultiplier,
           child: Row(
             children: [
               CircleAvatar(
-                radius: 20.0,
+                radius: 2.2 * AppScale.heightMultiplier,
                 child: info.getOwner().getProfilePicture(),
               ),
-              const SizedBox(
-                width: 10.0,
+              SizedBox(
+                width: 2.4 * AppScale.widthMultiplier,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -31,16 +32,16 @@ class CommentBox extends StatelessWidget {
                 children: [
                   Text(
                     info.getOwner().getUsername(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: kColorOwnerText,
-                      fontSize: 18.0,
+                      fontSize: 2.0 * AppScale.textMultiplier,
                     ),
                   ),
                   Text(
-                    info.getDate().toString().substring(0, 16),
-                    style: const TextStyle(
+                    info.getDate(),
+                    style: TextStyle(
                       color: kColorVideoText,
-                      fontSize: 12.0,
+                      fontSize: 1.4 * AppScale.textMultiplier,
                     ),
                   )
                 ],
@@ -48,11 +49,13 @@ class CommentBox extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(
-          height: 10.0,
+        SizedBox(
+          height: 1.1 * AppScale.heightMultiplier,
         ),
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+          margin: EdgeInsets.symmetric(
+            horizontal: 4.9 * AppScale.widthMultiplier,
+          ),
           alignment: Alignment.centerLeft,
           child: Text(
             info.getComment(),
@@ -63,12 +66,12 @@ class CommentBox extends StatelessWidget {
           ),
         ),
         Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 20.0,
-            vertical: 10.0,
+          margin: EdgeInsets.symmetric(
+            horizontal: 4.9 * AppScale.widthMultiplier,
+            vertical: 1.1 * AppScale.heightMultiplier,
           ),
           width: double.infinity,
-          height: 1,
+          height: 0.11 * AppScale.heightMultiplier,
           color: kColorInactive,
         ),
       ],

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:video_browse/models/category.dart';
 import 'package:video_browse/models/video_info.dart';
-import 'package:video_browse/widgets/video_list/video_box.dart';
+import 'package:video_browse/widgets/video_box/vertical_box/vertical_box.dart';
 
-class VideoList extends StatelessWidget {
+class VerticalBoxList extends StatelessWidget {
   final Category category;
   final List<VideoInfo> videos;
   final Function fun;
-  final List<VideoBox> videoList = <VideoBox>[];
+  final List<VerticalBox> videoList = <VerticalBox>[];
 
-  VideoList({
+  VerticalBoxList({
     Key? key,
     required this.category,
     required this.videos,
@@ -20,7 +20,7 @@ class VideoList extends StatelessWidget {
 
   void createVideos() {
     for (VideoInfo info in videos) {
-      VideoBox video = VideoBox(
+      VerticalBox video = VerticalBox(
         video: info,
         fun: fun,
       );
@@ -28,12 +28,12 @@ class VideoList extends StatelessWidget {
     }
   }
 
-  List<VideoBox> filterVideos(Category category) {
+  List<VerticalBox> filterVideos(Category category) {
     if (category.getCategory() == "All") {
       return videoList;
     } else {
-      List<VideoBox> temp = <VideoBox>[];
-      for (VideoBox videoBox in videoList) {
+      List<VerticalBox> temp = <VerticalBox>[];
+      for (VerticalBox videoBox in videoList) {
         if (videoBox.video.getCategory() == category.getCategory()) {
           temp.add(videoBox);
         }
