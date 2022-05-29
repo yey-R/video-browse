@@ -14,7 +14,7 @@ class RemoveVideo {
   RemoveVideo._internal();
 
   Future<void> removeVideo(VideoInfo info) async {
-    dynamic ref = _storageRef.child("videos/${info.getID()}.mp4");
+    dynamic ref = _storageRef.child("videos/${info.getID()}");
     await ref.delete();
     ref = _storageRef.child("/thumbnails/${info.getID()}");
     await ref.delete();
