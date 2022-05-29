@@ -22,12 +22,13 @@ class UploadVideo {
 
   UploadVideo._internal();
 
-  Future pickVideo() async {
+  Future<bool> pickVideo() async {
     try {
       _pickedFile = await _picker.pickVideo(source: ImageSource.gallery);
       _filePath = _pickedFile.path;
+      return true;
     } catch (e) {
-      return;
+      return false;
     }
   }
 

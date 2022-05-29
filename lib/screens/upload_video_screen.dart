@@ -25,6 +25,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
   String _name = "";
   String _description = "";
   String _status = "Upload in Progress";
+  bool _fileSelected = false;
   dynamic _category;
   bool _commentToggle = true;
   bool _emptyInput = false;
@@ -85,6 +86,13 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
   void updateStatus(String status) {
     setState(() {
       _status = status;
+    });
+  }
+
+  void selectFile() async {
+    dynamic result = await uploader.pickVideo();
+    setState(() {
+      _fileSelected = result;
     });
   }
 
@@ -175,11 +183,13 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
                         ),
                       ),
                       ActionButton(
-                        buttonText: "Select Video",
+                        buttonText:
+                            !_fileSelected ? "Select Video" : "Video Selected",
                         width: 36.5 * AppScale.widthMultiplier,
                         routerPage: null,
                         replace: false,
-                        fun: uploader.pickVideo,
+                        fun: selectFile,
+                        color: _fileSelected ? kColorActive : kColorInactive,
                       ),
                       ActionButton(
                         buttonImage: Image.asset(

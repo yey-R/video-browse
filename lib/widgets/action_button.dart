@@ -4,6 +4,7 @@ import 'package:video_browse/utilities/constants.dart';
 
 class ActionButton extends StatelessWidget {
   final dynamic routerPage;
+  final dynamic color;
   final dynamic buttonText;
   final dynamic fun;
   final dynamic buttonImage;
@@ -18,6 +19,7 @@ class ActionButton extends StatelessWidget {
     required this.fun,
     this.buttonText,
     this.buttonImage,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -37,9 +39,9 @@ class ActionButton extends StatelessWidget {
               vertical: 1.1 * AppScale.heightMultiplier,
               horizontal: 2.5 * AppScale.widthMultiplier,
             ),
-            decoration: const BoxDecoration(
-              color: kColorActive,
-              borderRadius: BorderRadius.all(
+            decoration: BoxDecoration(
+              color: color ?? kColorActive,
+              borderRadius: const BorderRadius.all(
                 Radius.circular(25.0),
               ),
             ),
