@@ -9,12 +9,11 @@ class User {
 
   User(
     this._uid,
-  ) {
-    setUser();
-  }
+  );
 
-  void setUser() async {
+  Future<User> setUser() async {
     user = await FetchUser().getUser(_uid);
+    return this;
   }
 
   String getUsername() {

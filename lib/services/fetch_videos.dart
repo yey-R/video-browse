@@ -38,7 +38,7 @@ class FetchVideos {
         name: _value[key]["title"],
         description: _value[key]["desc"],
         category: _value[key]["category"],
-        user: User(_value[key]["user"]),
+        user: await User(_value[key]["user"]).setUser(),
         duration: _value[key]["duration"],
         views: views,
         likes: likes,

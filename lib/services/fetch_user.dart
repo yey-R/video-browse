@@ -22,6 +22,7 @@ class FetchUser {
     final snapshot = await _dbRef.child('users').child("$uid").get();
     if (snapshot.exists) {
       currentUser = custom_user.User(uid);
+      await currentUser.setUser();
     }
   }
 

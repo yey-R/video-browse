@@ -6,7 +6,6 @@ import 'package:video_browse/screens/main_screen.dart';
 import 'package:video_browse/services/fetch_categories.dart';
 import 'package:video_browse/services/fetch_login.dart';
 import 'package:video_browse/services/fetch_user.dart';
-import 'package:video_browse/services/fetch_videos.dart';
 import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
 
@@ -39,7 +38,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     FetchLogin login = FetchLogin(widget.email, widget.password);
     dynamic isLoggedIn = await login.checkAuth();
     if (isLoggedIn) {
-      await FetchVideos().setVideos();
       await FetchCategories().setCategories();
       await FetchUser().setUser();
       Navigator.pushReplacement(

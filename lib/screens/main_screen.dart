@@ -23,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   dynamic categoryList;
   dynamic videoList;
   dynamic _activeCategory;
+  dynamic _isRefreshing;
 
   @override
   void initState() {
@@ -30,10 +31,19 @@ class _MainScreenState extends State<MainScreen> {
     _videos = FetchVideos().getVideos();
     _categories = FetchCategories().getCategories();
     _activeCategory = _categories[0];
+    refresh();
   }
 
-  void refresh() {
-    setState(() {});
+  void refresh() async {
+    setState(() {
+      _isRefreshing = true;
+    });
+    FetchVideos().reset();
+    await FetchVideos().setVideos();
+    setState(() {
+      _videos = FetchVideos().getVideos();
+      _isRefreshing = false;
+    });
   }
 
   void setFilter(Category activeCategory) {
@@ -90,11 +100,19 @@ class _MainScreenState extends State<MainScreen> {
                 fun: setFilter,
                 activeCategory: _activeCategory,
               ),
-              VerticalBoxList(
-                videos: _videos,
-                category: _activeCategory,
-                fun: refresh,
-              ),
+              _isRefreshing
+                  ? const Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: kColorOwnerText,
+                        ),
+                      ),
+                    )
+                  : VerticalBoxList(
+                      videos: _videos,
+                      category: _activeCategory,
+                      fun: refresh,
+                    ),
             ],
           ),
         ),
