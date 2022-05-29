@@ -88,13 +88,19 @@ class VerticalBox extends StatelessWidget {
           Row(
             children: [
               InfoBox(
-                icon: "assets/icons/view.png",
-                value: video.getView(),
+                icon: "assets/icons/duration.png",
+                value: video.getDurationString(),
                 isMainPage: true,
               ),
               Expanded(
                 child: Container(),
               ),
+              InfoBox(
+                icon: "assets/icons/view.png",
+                value: video.getView(),
+                isMainPage: true,
+              ),
+              SizedBox(width: 1.0 * AppScale.widthMultiplier),
               InfoBox(
                 icon: "assets/icons/like.png",
                 value: video.getLikes(),

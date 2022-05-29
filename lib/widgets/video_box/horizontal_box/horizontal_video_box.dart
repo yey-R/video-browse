@@ -4,6 +4,7 @@ import 'package:video_browse/screens/video_play_screen.dart';
 import 'package:video_browse/services/remove_video.dart';
 import 'package:video_browse/utilities/app_scale.dart';
 import 'package:video_browse/utilities/constants.dart';
+import 'package:video_browse/widgets/video_box/info_box.dart';
 
 class HorizontalBox extends StatelessWidget {
   final VideoInfo info;
@@ -56,14 +57,27 @@ class HorizontalBox extends StatelessWidget {
           children: [
             Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Image.network(
-                    info.getThumbnail(),
-                    height: 11.1 * AppScale.heightMultiplier,
-                    width: 48.6 * AppScale.widthMultiplier,
-                    fit: BoxFit.cover,
-                  ),
+                Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Image.network(
+                        info.getThumbnail(),
+                        height: 11.1 * AppScale.heightMultiplier,
+                        width: 48.6 * AppScale.widthMultiplier,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Positioned(
+                      left: 2.0 * AppScale.widthMultiplier,
+                      bottom: 0.2 * AppScale.heightMultiplier,
+                      child: InfoBox(
+                        icon: "assets/icons/duration.png",
+                        value: info.getDurationString(),
+                        isMainPage: true,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   width: 2.45 * AppScale.widthMultiplier,
@@ -104,18 +118,20 @@ class HorizontalBox extends StatelessWidget {
                 ),
               ],
             ),
-            Positioned(
-              right: 3.65 * AppScale.widthMultiplier,
-              child: GestureDetector(
-                child: const Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                ),
-                onTap: () {
-                  _delete(context);
-                },
-              ),
-            ),
+            isEditable
+                ? Positioned(
+                    right: 3.65 * AppScale.widthMultiplier,
+                    child: GestureDetector(
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                      onTap: () {
+                        _delete(context);
+                      },
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
       ),

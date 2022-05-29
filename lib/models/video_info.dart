@@ -10,26 +10,30 @@ class VideoInfo {
   final String description;
   final String category;
   final User user;
-  final int duration;
+  final bool commentToggle;
+  dynamic duration;
   dynamic views;
   dynamic likes;
   dynamic uploadDate;
-  final bool commentToggle;
   dynamic videoURL;
   dynamic thumbnailURL;
   final List<Comment> comments = <Comment>[];
   dynamic id;
+
+  dynamic _hours;
+  dynamic _minutes;
+  dynamic _seconds;
 
   VideoInfo({
     required this.name,
     required this.description,
     required this.category,
     required this.user,
-    required this.duration,
     required this.commentToggle,
     this.id,
     this.views,
     this.likes,
+    this.duration,
     this.uploadDate,
     this.videoURL,
     this.thumbnailURL,
@@ -65,6 +69,13 @@ class VideoInfo {
 
   bool isLiked(String uid) {
     return likes.contains(uid);
+  }
+
+  void setDuration(duration) {
+    this.duration = duration;
+    _seconds = (duration / 1000) % 60;
+    _minutes = (duration / (1000 * 60)) % 60;
+    _hours = (duration / (1000 * 60 * 60)) % 24;
   }
 
   List<Comment> getComments() {
@@ -117,8 +128,24 @@ class VideoInfo {
     return user;
   }
 
-  int getDuration() {
+  dynamic getDuration() {
     return duration;
+  }
+
+  String getDurationString() {
+    String result;
+    if (_hours >= 1) {
+      result = "$_hours:$_minutes";
+    } else if (_minutes >= 1) {
+      result = "$_minutes:$_seconds";
+    } else {
+      if (_seconds.round() >= 10) {
+        result = "00:${_seconds.round()}";
+      } else {
+        result = "00:0${_seconds.round()}";
+      }
+    }
+    return result;
   }
 
   int getView() {

@@ -4,7 +4,7 @@ import 'package:video_browse/utilities/constants.dart';
 
 class InfoBox extends StatelessWidget {
   final String icon;
-  final int value;
+  final dynamic value;
   final bool isMainPage;
   final List<Widget> widgets = [];
   final bool isLiked;
