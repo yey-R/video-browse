@@ -31,7 +31,7 @@ class UploadVideo {
     }
   }
 
-  Future<void> uploadVideo(VideoInfo info) async {
+  Future<void> uploadVideo(VideoInfo info, Function fun) async {
     dynamic mediaInfo = await VideoCompress.compressVideo(
       _filePath,
       quality: VideoQuality.HighestQuality,
@@ -39,6 +39,7 @@ class UploadVideo {
       includeAudio: true,
       frameRate: 60,
     );
+    info.setDuration(mediaInfo.duration);
     File file = File(mediaInfo.path);
     final ref = _storageRef.child("videos/${info.getID()}");
 
@@ -47,7 +48,9 @@ class UploadVideo {
       await file.delete();
       // ignore: empty_catches
     } on FirebaseException {}
+    fun("Creating thumbnail");
     dynamic thumbnailLink = await createThumbnail(info);
+    fun("Writing metadata");
     await createMetadata(
       info,
       ref,
