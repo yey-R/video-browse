@@ -39,7 +39,6 @@ class FetchVideos {
         description: _value[key]["desc"],
         category: _value[key]["category"],
         user: await User(_value[key]["user"]).setUser(),
-        duration: _value[key]["duration"],
         views: views,
         likes: likes,
         uploadDate: _value[key]["uploadDate"],
@@ -47,6 +46,7 @@ class FetchVideos {
         videoURL: _value[key]["linkToVideo"],
         thumbnailURL: _value[key]["linkToThumbnail"],
       );
+      video.setDuration(_value[key]["duration"]);
       _videoList.add(video);
     }
   }
