@@ -104,7 +104,7 @@ class _MainScreenState extends State<MainScreen> {
                   ? const Expanded(
                       child: Center(
                         child: CircularProgressIndicator(
-                          color: kColorOwnerText,
+                          color: kColorActive,
                         ),
                       ),
                     )

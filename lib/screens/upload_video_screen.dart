@@ -24,6 +24,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
   final UploadVideo uploader = UploadVideo();
   String _name = "";
   String _description = "";
+  String _status = "Upload in Progress";
   dynamic _category;
   bool _commentToggle = true;
   bool _emptyInput = false;
@@ -70,7 +71,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
       category: _category.getCategory(),
       commentToggle: _commentToggle,
     );
-    await uploader.uploadVideo(newVideo);
+    await uploader.uploadVideo(newVideo, updateStatus);
     UploadVideo().reset();
     Navigator.pushReplacement(
       context,
@@ -82,22 +83,29 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
     );
   }
 
+  void updateStatus(String status) {
+    setState(() {
+      _status = status;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: isUploading ? Colors.black : kColorPrimary,
+      backgroundColor: kColorPrimary,
       body: SafeArea(
         child: isUploading
             ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      "assets/loading.gif",
+                    const CircularProgressIndicator(
+                      color: kColorActive,
                     ),
+                    SizedBox(height: 3.0 * AppScale.heightMultiplier),
                     Text(
-                      "Upload in Progress",
+                      _status,
                       style: TextStyle(
                         color: kColorOwnerText,
                         fontSize: 2.2 * AppScale.textMultiplier,
@@ -120,7 +128,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
                           horizontal: 3.65 * AppScale.widthMultiplier,
                         ),
                         child: Text(
-                          "UPLOAD YOU OWN CONTENT!",
+                          uploadContent,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: kColorInactive,
