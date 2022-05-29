@@ -6,6 +6,7 @@ import 'package:video_browse/models/video_info.dart';
 import 'package:video_browse/services/fetch_user.dart';
 import 'package:video_browse/services/fetch_videos.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:video_compress/video_compress.dart';
 
 class UploadVideo {
   static final UploadVideo _uploadVideo = UploadVideo._internal();
@@ -31,10 +32,19 @@ class UploadVideo {
   }
 
   Future<void> uploadVideo(VideoInfo info) async {
-    File file = File(_filePath);
+    dynamic mediaInfo = await VideoCompress.compressVideo(
+      _filePath,
+      quality: VideoQuality.HighestQuality,
+      deleteOrigin: false,
+      includeAudio: true,
+      frameRate: 60,
+    );
+    File file = File(mediaInfo.path);
     final ref = _storageRef.child("videos/${info.getID()}");
+
     try {
       await ref.putFile(file);
+      await file.delete();
       // ignore: empty_catches
     } on FirebaseException {}
     dynamic thumbnailLink = await createThumbnail(info);
@@ -99,7 +109,7 @@ class UploadVideo {
     File file = File(thumbnail!);
     final ref = _storageRef.child("thumbnails/${info.getID()}");
     await ref.putFile(file);
-    file.delete();
+    await file.delete();
     return await ref.getDownloadURL();
   }
 
