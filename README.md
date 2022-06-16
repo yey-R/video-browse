@@ -1,9 +1,9 @@
 # Video Browsing Platform Application
 
-– An Android mobile video browsing application written with Dart, Flutter
-– Users can upload/remove their own content and interact with other videos
-– Shows the data such as like, view count in real time
-– Compresses the videos while uploading
+– An Android mobile video browsing application written with Dart, Flutter <br>
+– Users can upload/remove their own content and interact with other videos <br>
+– Shows the data such as like, view count in real time <br>
+– Compresses the videos while uploading <br>
 – Uses Firebase database
 
 ## Some Screenshots
