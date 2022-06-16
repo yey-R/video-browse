@@ -9,6 +9,6 @@
 ## Some Screenshots
 
 
-<img src="screenshots/screenshots-0.png" height="300em" />   <img src="screenshots/screenshots-1.png" height="300em" />   <img src="screenshots/screenshots-2.png" height="300em" />
-<img src="screenshots/screenshots-4.png" height="300em" />   <img src="screenshots/screenshots-5.png" height="300em" />   <img src="screenshots/screenshots-6.png" height="300em" />
-<img src="screenshots/screenshots-7.png" height="300em" />   <img src="screenshots/screenshots-8.png" height="300em" />   <img src="screenshots/screenshots-9.png" height="300em" />   <img src="screenshots/screenshots-10.png" height="300em" />
+<img src="screenshots/screenshot-0.png" height="300em" />   <img src="screenshots/screenshot-1.png" height="300em" />   <img src="screenshots/screenshot-2.png" height="300em" />
+<img src="screenshots/screenshot-4.png" height="300em" />   <img src="screenshots/screenshot-5.png" height="300em" />   <img src="screenshots/screenshot-6.png" height="300em" />
+<img src="screenshots/screenshot-7.png" height="300em" />   <img src="screenshots/screenshot-8.png" height="300em" />   <img src="screenshots/screenshot-9.png" height="300em" />   <img src="screenshots/screenshot-10.png" height="300em" />
