@@ -1,16 +1,14 @@
-# video_browse
+# Video Browsing Platform Application
 
-A new Flutter project.
+– An Android mobile video browsing application written with Dart, Flutter
+– Users can upload/remove their own content and interact with other videos
+– Shows the data such as like, view count in real time
+– Compresses the videos while uploading
+– Uses Firebase database
 
-## Getting Started
+## Some Screenshots
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="screenshots/screenshots-0.png" height="300em" />   <img src="screenshots/screenshots-1.png" height="300em" />   <img src="screenshots/screenshots-2.png" height="300em" />
+<img src="screenshots/screenshots-4.png" height="300em" />   <img src="screenshots/screenshots-5.png" height="300em" />   <img src="screenshots/screenshots-6.png" height="300em" />
+<img src="screenshots/screenshots-7.png" height="300em" />   <img src="screenshots/screenshots-8.png" height="300em" />   <img src="screenshots/screenshots-9.png" height="300em" />   <img src="screenshots/screenshots-10.png" height="300em" />
